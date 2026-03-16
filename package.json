@@ -1,0 +1,13 @@
+{
+  "name": "tokyo-trip-website",
+  "version": "1.0.0",
+  "description": "Interactive Tokyo Trip 2025 Itinerary and Planning Website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 3000",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": ["tokyo", "travel", "itinerary", "trip-planner"],
+  "author": "Tokyo Trip App",
+  "license": "MIT"
+}
