@@ -268,6 +268,17 @@
             color: #666;
             font-size: 0.9em;
             line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .location-item a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .location-item a:hover {
+            text-decoration: underline;
         }
 
         .recommendations-grid {
@@ -316,6 +327,145 @@
             font-weight: 600;
         }
 
+        .rec-card a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .rec-card a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+        }
+
+        .btn-secondary {
+            background: #ddd;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #ccc;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .expense-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .expense-item h4 {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .expense-item p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .split-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .split-table th,
+        .split-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .split-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .split-table tr:hover {
+            background: #f8f9fa;
+        }
+
         footer {
             text-align: center;
             color: white;
@@ -338,6 +488,10 @@
 
             .itinerary-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
             }
         }
     </style>
@@ -365,7 +519,7 @@
 
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('itinerary')">📅 Itinerary</button>
-            <button class="tab-btn" onclick="switchTab('overview')">📊 Overview</button>
+            <button class="tab-btn" onclick="switchTab('expenses')">💰 Expenses</button>
             <button class="tab-btn" onclick="switchTab('locations')">📍 Locations</button>
             <button class="tab-btn" onclick="switchTab('recommendations')">⭐ Recommendations</button>
         </div>
@@ -373,36 +527,16 @@
         <!-- Itinerary Tab -->
         <div id="itinerary" class="tab-content active">
             <h2 style="margin-bottom: 30px; color: #333;">Daily Itinerary</h2>
+            <button class="btn" onclick="openEditItineraryModal()">✏️ Edit Itinerary</button>
             <div class="itinerary-grid" id="itineraryGrid"></div>
         </div>
 
-        <!-- Overview Tab -->
-        <div id="overview" class="tab-content">
-            <h2 style="margin-bottom: 30px; color: #333;">Trip Overview & Statistics</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="label">Total Activities</div>
-                    <div class="value" id="totalActivities">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="label">Locations Visited</div>
-                    <div class="value" id="totalLocations">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="label">Average Activities/Day</div>
-                    <div class="value" id="avgActivities">0</div>
-                </div>
-            </div>
-            <div class="charts-grid">
-                <div class="chart-container">
-                    <h3>Activities by Day</h3>
-                    <canvas id="activitiesChart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <h3>Activity Types Distribution</h3>
-                    <canvas id="typesChart"></canvas>
-                </div>
-            </div>
+        <!-- Expenses Tab -->
+        <div id="expenses" class="tab-content">
+            <h2 style="margin-bottom: 30px; color: #333;">Expense Tracker</h2>
+            <button class="btn" onclick="openAddExpenseModal()">➕ Add Expense</button>
+            <div id="expensesList"></div>
+            <div id="splitSummary"></div>
         </div>
 
         <!-- Locations Tab -->
@@ -414,6 +548,8 @@
         <!-- Recommendations Tab -->
         <div id="recommendations" class="tab-content">
             <h2 style="margin-bottom: 30px; color: #333;">Curated Recommendations</h2>
+            <button class="btn" onclick="openAddRecommendationModal()">➕ Add Recommendation</button>
+            <button class="btn btn-secondary" onclick="openEditRecommendationModal()">✏️ Edit Recommendations</button>
             <div class="recommendations-grid" id="recommendationsGrid"></div>
         </div>
 
@@ -422,34 +558,129 @@
         </footer>
     </div>
 
+    <!-- Modals -->
+    <div id="editItineraryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Edit Itinerary</div>
+            <div id="editItineraryForm"></div>
+            <button class="btn" onclick="saveItinerary()">Save Changes</button>
+            <button class="btn btn-secondary" onclick="closeModal('editItineraryModal')">Cancel</button>
+        </div>
+    </div>
+
+    <div id="addExpenseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Add Expense</div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" id="expenseDesc" placeholder="e.g., Dinner at restaurant">
+            </div>
+            <div class="form-group">
+                <label>Amount (¥)</label>
+                <input type="number" id="expenseAmount" placeholder="0" min="0">
+            </div>
+            <div class="form-group">
+                <label>Paid By</label>
+                <select id="expensePaidBy">
+                    <option value="Person 1">Person 1</option>
+                    <option value="Person 2">Person 2</option>
+                    <option value="Person 3">Person 3</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="expenseCategory">
+                    <option value="Food">Food</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Accommodation">Accommodation</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <button class="btn" onclick="addExpense()">Add Expense</button>
+            <button class="btn btn-secondary" onclick="closeModal('addExpenseModal')">Cancel</button>
+        </div>
+    </div>
+
+    <div id="addRecommendationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Add Recommendation</div>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="recName" placeholder="Restaurant or attraction name">
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="recCategory">
+                    <option value="Food">Food</option>
+                    <option value="Attraction">Attraction</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Car-related">Car-related</option>
+                    <option value="Entertainment">Entertainment</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" id="recLocation" placeholder="e.g., Shinjuku, Tokyo">
+            </div>
+            <div class="form-group">
+                <label>Details</label>
+                <textarea id="recDetails" placeholder="Description of the place"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Google Maps Link</label>
+                <input type="url" id="recMapLink" placeholder="https://maps.google.com/...">
+            </div>
+            <div class="form-group">
+                <label>Rating (1-5)</label>
+                <input type="number" id="recRating" placeholder="4.5" min="1" max="5" step="0.1">
+            </div>
+            <button class="btn" onclick="addRecommendation()">Add Recommendation</button>
+            <button class="btn btn-secondary" onclick="closeModal('addRecommendationModal')">Cancel</button>
+        </div>
+    </div>
+
+    <div id="editRecommendationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Edit Recommendations</div>
+            <div id="editRecommendationForm"></div>
+            <button class="btn" onclick="saveRecommendations()">Save Changes</button>
+            <button class="btn btn-secondary" onclick="closeModal('editRecommendationModal')">Cancel</button>
+        </div>
+    </div>
+
     <script>
-        const tripData = {
+        // Initialize data from localStorage
+        let tripData = JSON.parse(localStorage.getItem('tripData')) || {
             "trip_name": "Tokyo Trip 2025",
             "start_date": "15/04/2025",
             "end_date": "20/04/2025",
             "duration_days": 6,
             "itinerary": [
-                {"day": 1, "date": "15/04/2025 (Wed)", "location": "東京", "activities": [{"type": "Breakfast", "details": "ブリコラージュ ブレッド アンド カンパニー"}, {"type": "Morning", "details": "アルペントーキョー [Alpen TOKYO]"}, {"type": "Activity", "details": "模型車店 ミニカーショップ ケンボックス"}, {"type": "Activity", "details": "新宿 北村写真機店"}, {"type": "Lunch", "details": "Ramen Afro Beats / 麺屋海神"}, {"type": "Afternoon", "details": "Arrives in Tokyo & Car Rental"}, {"type": "Activity", "details": "Tomica Shop"}, {"type": "Activity", "details": "Luck Rack イオンモール幕張新都心店"}, {"type": "Activity", "details": "Go-Kart Harbor Circuit"}, {"type": "Dinner", "details": "最上階 夜景 居酒屋 空海"}, {"type": "Night", "details": "Stay near JDM area"}]},
-                {"day": 2, "date": "16/04/2025 (Thurs)", "location": "東京 > 富士 / 御殿場", "activities": [{"type": "Morning", "details": "埼玉 鉄道博物館"}, {"type": "Activity", "details": "GENERAL STORE RAILYARD 大宮"}, {"type": "Activity", "details": "埼玉 > 富士 (2hrs)"}, {"type": "Lunch", "details": "THE OUTLETS SHONAN HIRATSUKA"}, {"type": "Afternoon", "details": "RECAMP 富士スピードウェイ"}, {"type": "Activity", "details": "Fuji Motor Sports Museum"}, {"type": "Activity", "details": "御殿場 Outlet"}, {"type": "Dinner", "details": "BBQ"}]},
-                {"day": 3, "date": "17/04/2025 (Fri)", "location": "富士 > 箱根 > 伊豆", "activities": [{"type": "Breakfast", "details": "Cook"}, {"type": "Morning", "details": "Fuji Speedway"}, {"type": "Activity", "details": "棠陽神社"}, {"type": "Activity", "details": "富士 > 長尾峠 > 箱根"}, {"type": "Lunch", "details": "銀の穂 / cafe KOMON"}, {"type": "Afternoon", "details": "箱根神社 & 大観山展望台"}, {"type": "Activity", "details": "芦ノ湖Skyline"}, {"type": "Dinner", "details": "和食かっぽれ"}, {"type": "Night", "details": "箱根 > 伊豆"}]},
-                {"day": 4, "date": "18/04/2025 (Sat)", "location": "伊豆 > 東京", "activities": [{"type": "Breakfast", "details": "朝食"}, {"type": "Morning", "details": "大室山登山リフト"}, {"type": "Activity", "details": "伊豆シャボテン動物公園"}, {"type": "Activity", "details": "小室山リッジウォーク"}, {"type": "Lunch", "details": "こうげん寿し / 磯料理"}, {"type": "Activity", "details": "伊豆 > 横浜"}, {"type": "Activity", "details": "新江ノ島水族館"}, {"type": "Dinner", "details": "江ノ島 / 横浜"}, {"type": "Night", "details": "Stay in 横浜"}]},
-                {"day": 5, "date": "19/04/2025 (Sun)", "location": "東京 > 秋名 > 東京", "activities": [{"type": "Morning", "details": "JDM Car Rental"}, {"type": "Activity", "details": "おもしろレンタカー 野田本店"}, {"type": "Activity", "details": "埼玉 > 群馬"}, {"type": "Activity", "details": "榛名山 ヤセオネ峠"}, {"type": "Activity", "details": "群馬 > 東京"}, {"type": "Activity", "details": "Return JDM Car"}, {"type": "Dinner", "details": "Hot Pot"}, {"type": "Night", "details": "東京 > 埼玉"}]},
-                {"day": 6, "date": "20/04/2025 (Mon)", "location": "東京", "activities": [{"type": "Breakfast", "details": "豊洲市場"}, {"type": "Activity", "details": "Urban Dock LaLaport Toyosu"}, {"type": "Lunch", "details": "WE ARE THE FARM 豊洲"}, {"type": "Afternoon", "details": "Back to Hong Kong & Return Car"}, {"type": "Activity", "details": "SMALL WORLDS Miniature Museum"}, {"type": "Activity", "details": "Tokyo Joypolis"}]}
+                {"day": 1, "date": "15/04/2025 (Wed)", "location": "東京", "mapLink": "https://maps.google.com/maps?q=Tokyo", "activities": [{"type": "Breakfast", "details": "ブリコラージュ ブレッド アンド カンパニー"}, {"type": "Morning", "details": "アルペントーキョー [Alpen TOKYO]"}, {"type": "Activity", "details": "模型車店 ミニカーショップ ケンボックス"}, {"type": "Activity", "details": "新宿 北村写真機店"}, {"type": "Lunch", "details": "Ramen Afro Beats / 麺屋海神"}, {"type": "Afternoon", "details": "Arrives in Tokyo & Car Rental"}, {"type": "Activity", "details": "Tomica Shop"}, {"type": "Activity", "details": "Luck Rack イオンモール幕張新都心店"}, {"type": "Activity", "details": "Go-Kart Harbor Circuit"}, {"type": "Dinner", "details": "最上階 夜景 居酒屋 空海"}, {"type": "Night", "details": "Stay near JDM area"}]},
+                {"day": 2, "date": "16/04/2025 (Thurs)", "location": "東京 > 富士 / 御殿場", "mapLink": "https://maps.google.com/maps?q=Fuji+Speedway", "activities": [{"type": "Morning", "details": "埼玉 鉄道博物館"}, {"type": "Activity", "details": "GENERAL STORE RAILYARD 大宮"}, {"type": "Activity", "details": "埼玉 > 富士 (2hrs)"}, {"type": "Lunch", "details": "THE OUTLETS SHONAN HIRATSUKA"}, {"type": "Afternoon", "details": "RECAMP 富士スピードウェイ"}, {"type": "Activity", "details": "Fuji Motor Sports Museum"}, {"type": "Activity", "details": "御殿場 Outlet"}, {"type": "Dinner", "details": "BBQ"}]},
+                {"day": 3, "date": "17/04/2025 (Fri)", "location": "富士 > 箱根 > 伊豆", "mapLink": "https://maps.google.com/maps?q=Hakone", "activities": [{"type": "Breakfast", "details": "Cook"}, {"type": "Morning", "details": "Fuji Speedway"}, {"type": "Activity", "details": "棠陽神社"}, {"type": "Activity", "details": "富士 > 長尾峠 > 箱根"}, {"type": "Lunch", "details": "銀の穂 / cafe KOMON"}, {"type": "Afternoon", "details": "箱根神社 & 大観山展望台"}, {"type": "Activity", "details": "芦ノ湖Skyline"}, {"type": "Dinner", "details": "和食かっぽれ"}, {"type": "Night", "details": "箱根 > 伊豆"}]},
+                {"day": 4, "date": "18/04/2025 (Sat)", "location": "伊豆 > 東京", "mapLink": "https://maps.google.com/maps?q=Izu+Shizuoka", "activities": [{"type": "Breakfast", "details": "朝食"}, {"type": "Morning", "details": "大室山登山リフト"}, {"type": "Activity", "details": "伊豆シャボテン動物公園"}, {"type": "Activity", "details": "小室山リッジウォーク"}, {"type": "Lunch", "details": "こうげん寿し / 磯料理"}, {"type": "Activity", "details": "伊豆 > 横浜"}, {"type": "Activity", "details": "新江ノ島水族館"}, {"type": "Dinner", "details": "江ノ島 / 横浜"}, {"type": "Night", "details": "Stay in 横浜"}]},
+                {"day": 5, "date": "19/04/2025 (Sun)", "location": "東京 > 秋名 > 東京", "mapLink": "https://maps.google.com/maps?q=Haruna+Mountain", "activities": [{"type": "Morning", "details": "JDM Car Rental"}, {"type": "Activity", "details": "おもしろレンタカー 野田本店"}, {"type": "Activity", "details": "埼玉 > 群馬"}, {"type": "Activity", "details": "榛名山 ヤセオネ峠"}, {"type": "Activity", "details": "群馬 > 東京"}, {"type": "Activity", "details": "Return JDM Car"}, {"type": "Dinner", "details": "Hot Pot"}, {"type": "Night", "details": "東京 > 埼玉"}]},
+                {"day": 6, "date": "20/04/2025 (Mon)", "location": "東京", "mapLink": "https://maps.google.com/maps?q=Toyosu+Tokyo", "activities": [{"type": "Breakfast", "details": "豊洲市場"}, {"type": "Activity", "details": "Urban Dock LaLaport Toyosu"}, {"type": "Lunch", "details": "WE ARE THE FARM 豊洲"}, {"type": "Afternoon", "details": "Back to Hong Kong & Return Car"}, {"type": "Activity", "details": "SMALL WORLDS Miniature Museum"}, {"type": "Activity", "details": "Tokyo Joypolis"}]}
             ]
         };
 
-        const recommendations = [
-            {name: "Tsukiji Outer Market", category: "Food", location: "Chuo, Tokyo", rating: 4.5, details: "Fresh seafood and sushi"},
-            {name: "Senso-ji Temple", category: "Attraction", location: "Asakusa, Tokyo", rating: 4.6, details: "Tokyo's oldest temple"},
-            {name: "Shibuya 109", category: "Shopping", location: "Shibuya, Tokyo", rating: 4.4, details: "Fashion center"},
-            {name: "Daikoku PA", category: "Car-related", location: "Yokohama", rating: 4.7, details: "Legendary JDM car meet"},
-            {name: "Fuji Speedway", category: "Car-related", location: "Shizuoka", rating: 4.6, details: "Racing circuit"},
-            {name: "Tokyo Joypolis", category: "Entertainment", location: "Odaiba", rating: 4.3, details: "Indoor theme park"},
-            {name: "Akihabara Electric Town", category: "Shopping", location: "Akihabara", rating: 4.3, details: "Electronics & anime"},
-            {name: "Meiji Shrine", category: "Attraction", location: "Shibuya", rating: 4.7, details: "Serene Shinto shrine"},
-            {name: "Ichiran Ramen", category: "Food", location: "Shinjuku", rating: 4.3, details: "Authentic tonkotsu ramen"},
-            {name: "Tokyo Skytree", category: "Attraction", location: "Sumida", rating: 4.5, details: "Tallest structure in Japan"}
+        let recommendations = JSON.parse(localStorage.getItem('recommendations')) || [
+            {name: "Tsukiji Outer Market", category: "Food", location: "Chuo, Tokyo", rating: 4.5, details: "Fresh seafood and sushi", mapLink: "https://maps.google.com/maps?q=Tsukiji+Market"},
+            {name: "Senso-ji Temple", category: "Attraction", location: "Asakusa, Tokyo", rating: 4.6, details: "Tokyo's oldest temple", mapLink: "https://maps.google.com/maps?q=Senso-ji+Temple"},
+            {name: "Shibuya 109", category: "Shopping", location: "Shibuya, Tokyo", rating: 4.4, details: "Fashion center", mapLink: "https://maps.google.com/maps?q=Shibuya+109"},
+            {name: "Daikoku PA", category: "Car-related", location: "Yokohama", rating: 4.7, details: "Legendary JDM car meet", mapLink: "https://maps.google.com/maps?q=Daikoku+PA"},
+            {name: "Fuji Speedway", category: "Car-related", location: "Shizuoka", rating: 4.6, details: "Racing circuit", mapLink: "https://maps.google.com/maps?q=Fuji+Speedway"},
+            {name: "Tokyo Joypolis", category: "Entertainment", location: "Odaiba", rating: 4.3, details: "Indoor theme park", mapLink: "https://maps.google.com/maps?q=Tokyo+Joypolis"},
+            {name: "Akihabara Electric Town", category: "Shopping", location: "Akihabara", rating: 4.3, details: "Electronics & anime", mapLink: "https://maps.google.com/maps?q=Akihabara"},
+            {name: "Meiji Shrine", category: "Attraction", location: "Shibuya", rating: 4.7, details: "Serene Shinto shrine", mapLink: "https://maps.google.com/maps?q=Meiji+Shrine"},
+            {name: "Ichiran Ramen", category: "Food", location: "Shinjuku", rating: 4.3, details: "Authentic tonkotsu ramen", mapLink: "https://maps.google.com/maps?q=Ichiran+Ramen"},
+            {name: "Tokyo Skytree", category: "Attraction", location: "Sumida", rating: 4.5, details: "Tallest structure in Japan", mapLink: "https://maps.google.com/maps?q=Tokyo+Skytree"}
         ];
+
+        let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
 
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -457,10 +688,12 @@
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
 
-            if (tabName === 'overview') {
-                setTimeout(() => {
-                    initCharts();
-                }, 100);
+            if (tabName === 'expenses') {
+                renderExpenses();
+            } else if (tabName === 'recommendations') {
+                renderRecommendations();
+            } else if (tabName === 'locations') {
+                renderLocations();
             }
         }
 
@@ -471,6 +704,7 @@
                     <h3>Day ${day.day}</h3>
                     <div class="date">${day.date}</div>
                     <div class="location">📍 ${day.location}</div>
+                    ${day.mapLink ? `<a href="${day.mapLink}" target="_blank" style="color: white; text-decoration: underline; font-size: 0.9em;">View on Google Maps</a>` : ''}
                     <div class="activity-count">${day.activities.length} activities</div>
                     <div class="day-details" id="details-${idx}">
                         ${day.activities.map(act => `
@@ -489,118 +723,234 @@
             details.classList.toggle('show');
         }
 
-        function renderOverview() {
-            const totalActivities = tripData.itinerary.reduce((sum, day) => sum + day.activities.length, 0);
-            const uniqueLocations = new Set(tripData.itinerary.map(day => day.location)).size;
-            const avgActivities = (totalActivities / tripData.duration_days).toFixed(1);
-
-            document.getElementById('totalActivities').textContent = totalActivities;
-            document.getElementById('totalLocations').textContent = uniqueLocations;
-            document.getElementById('avgActivities').textContent = avgActivities;
-        }
-
         function renderLocations() {
-            const locations = new Set(tripData.itinerary.map(day => day.location));
+            const locations = tripData.itinerary;
             const list = document.getElementById('locationsList');
-            list.innerHTML = Array.from(locations).map(loc => `
+            list.innerHTML = locations.map(loc => `
                 <li class="location-item">
-                    <h4>📍 ${loc}</h4>
-                    <p>${tripData.itinerary.filter(d => d.location === loc).map(d => `Day ${d.day}`).join(', ')}</p>
+                    <h4>📍 ${loc.location}</h4>
+                    <p>Day ${loc.day} - ${loc.date}</p>
+                    ${loc.mapLink ? `<a href="${loc.mapLink}" target="_blank">📍 View on Google Maps</a>` : ''}
                 </li>
             `).join('');
         }
 
         function renderRecommendations() {
             const grid = document.getElementById('recommendationsGrid');
-            grid.innerHTML = recommendations.map(rec => `
+            grid.innerHTML = recommendations.map((rec, idx) => `
                 <div class="rec-card">
                     <h4>${rec.name}</h4>
                     <span class="category">${rec.category}</span>
                     <p>📍 ${rec.location}</p>
                     <p>${rec.details}</p>
                     <p class="rating">⭐ ${rec.rating}/5</p>
+                    ${rec.mapLink ? `<a href="${rec.mapLink}" target="_blank">📍 View on Google Maps</a>` : ''}
                 </div>
             `).join('');
         }
 
-        function initCharts() {
-            // Activities by day chart
-            const dayLabels = tripData.itinerary.map(d => `Day ${d.day}`);
-            const activityCounts = tripData.itinerary.map(d => d.activities.length);
-
-            const ctx1 = document.getElementById('activitiesChart');
-            if (ctx1 && !ctx1.chart) {
-                ctx1.chart = new Chart(ctx1, {
-                    type: 'bar',
-                    data: {
-                        labels: dayLabels,
-                        datasets: [{
-                            label: 'Number of Activities',
-                            data: activityCounts,
-                            backgroundColor: 'rgba(102, 126, 234, 0.6)',
-                            borderColor: 'rgba(102, 126, 234, 1)',
-                            borderWidth: 2,
-                            borderRadius: 8
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {display: false}
-                        },
-                        scales: {
-                            y: {beginAtZero: true}
-                        }
-                    }
-                });
+        function renderExpenses() {
+            const list = document.getElementById('expensesList');
+            if (expenses.length === 0) {
+                list.innerHTML = '<p style="color: #666; text-align: center;">No expenses added yet.</p>';
+            } else {
+                list.innerHTML = expenses.map((exp, idx) => `
+                    <div class="expense-item">
+                        <h4>${exp.description}</h4>
+                        <p><strong>Amount:</strong> ¥${exp.amount.toLocaleString()}</p>
+                        <p><strong>Paid By:</strong> ${exp.paidBy}</p>
+                        <p><strong>Category:</strong> ${exp.category}</p>
+                        <button class="btn btn-secondary" onclick="deleteExpense(${idx})">Delete</button>
+                    </div>
+                `).join('');
             }
 
-            // Activity types distribution
-            const typeCounts = {};
-            tripData.itinerary.forEach(day => {
-                day.activities.forEach(act => {
-                    typeCounts[act.type] = (typeCounts[act.type] || 0) + 1;
-                });
+            // Calculate splits
+            calculateSplits();
+        }
+
+        function calculateSplits() {
+            const summary = document.getElementById('splitSummary');
+            if (expenses.length === 0) {
+                summary.innerHTML = '';
+                return;
+            }
+
+            // Get unique payers
+            const payers = [...new Set(expenses.map(e => e.paidBy))];
+            const totalByPayer = {};
+            const splits = {};
+
+            payers.forEach(payer => {
+                totalByPayer[payer] = expenses.filter(e => e.paidBy === payer).reduce((sum, e) => sum + e.amount, 0);
+                splits[payer] = 0;
             });
 
-            const ctx2 = document.getElementById('typesChart');
-            if (ctx2 && !ctx2.chart) {
-                ctx2.chart = new Chart(ctx2, {
-                    type: 'doughnut',
-                    data: {
-                        labels: Object.keys(typeCounts),
-                        datasets: [{
-                            data: Object.values(typeCounts),
-                            backgroundColor: [
-                                'rgba(102, 126, 234, 0.8)',
-                                'rgba(118, 75, 162, 0.8)',
-                                'rgba(237, 100, 166, 0.8)',
-                                'rgba(255, 154, 158, 0.8)',
-                                'rgba(250, 208, 196, 0.8)',
-                                'rgba(255, 195, 113, 0.8)',
-                                'rgba(52, 211, 153, 0.8)',
-                                'rgba(59, 130, 246, 0.8)'
-                            ],
-                            borderWidth: 2,
-                            borderColor: 'white'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }
-                    }
-                });
+            const totalExpense = Object.values(totalByPayer).reduce((a, b) => a + b, 0);
+            const perPerson = totalExpense / payers.length;
+
+            let splitHTML = `
+                <div style="margin-top: 30px; background: #f8f9fa; padding: 20px; border-radius: 12px;">
+                    <h3 style="margin-bottom: 20px; color: #333;">💰 Expense Summary & Split</h3>
+                    <p style="margin-bottom: 15px; color: #666;"><strong>Total Expenses:</strong> ¥${totalExpense.toLocaleString()}</p>
+                    <p style="margin-bottom: 20px; color: #666;"><strong>Per Person:</strong> ¥${perPerson.toLocaleString()}</p>
+                    <table class="split-table">
+                        <thead>
+                            <tr>
+                                <th>Person</th>
+                                <th>Paid</th>
+                                <th>Should Pay</th>
+                                <th>Owes/Owed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            payers.forEach(payer => {
+                const paid = totalByPayer[payer];
+                const owes = paid - perPerson;
+                const status = owes > 0 ? `🟢 Owed ¥${owes.toLocaleString()}` : `🔴 Owes ¥${Math.abs(owes).toLocaleString()}`;
+                splitHTML += `
+                    <tr>
+                        <td>${payer}</td>
+                        <td>¥${paid.toLocaleString()}</td>
+                        <td>¥${perPerson.toLocaleString()}</td>
+                        <td>${status}</td>
+                    </tr>
+                `;
+            });
+
+            splitHTML += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            summary.innerHTML = splitHTML;
+        }
+
+        function openAddExpenseModal() {
+            document.getElementById('addExpenseModal').classList.add('show');
+        }
+
+        function addExpense() {
+            const desc = document.getElementById('expenseDesc').value;
+            const amount = parseFloat(document.getElementById('expenseAmount').value);
+            const paidBy = document.getElementById('expensePaidBy').value;
+            const category = document.getElementById('expenseCategory').value;
+
+            if (!desc || !amount || amount <= 0) {
+                alert('Please fill in all fields correctly');
+                return;
             }
+
+            expenses.push({ description: desc, amount, paidBy, category });
+            localStorage.setItem('expenses', JSON.stringify(expenses));
+
+            document.getElementById('expenseDesc').value = '';
+            document.getElementById('expenseAmount').value = '';
+            closeModal('addExpenseModal');
+            renderExpenses();
+        }
+
+        function deleteExpense(idx) {
+            expenses.splice(idx, 1);
+            localStorage.setItem('expenses', JSON.stringify(expenses));
+            renderExpenses();
+        }
+
+        function openAddRecommendationModal() {
+            document.getElementById('addRecommendationModal').classList.add('show');
+        }
+
+        function addRecommendation() {
+            const name = document.getElementById('recName').value;
+            const category = document.getElementById('recCategory').value;
+            const location = document.getElementById('recLocation').value;
+            const details = document.getElementById('recDetails').value;
+            const mapLink = document.getElementById('recMapLink').value;
+            const rating = parseFloat(document.getElementById('recRating').value) || 4.0;
+
+            if (!name || !location) {
+                alert('Please fill in name and location');
+                return;
+            }
+
+            recommendations.push({ name, category, location, details, mapLink, rating });
+            localStorage.setItem('recommendations', JSON.stringify(recommendations));
+
+            document.getElementById('recName').value = '';
+            document.getElementById('recDetails').value = '';
+            document.getElementById('recMapLink').value = '';
+            document.getElementById('recRating').value = '';
+            closeModal('addRecommendationModal');
+            renderRecommendations();
+        }
+
+        function openEditRecommendationModal() {
+            const form = document.getElementById('editRecommendationForm');
+            form.innerHTML = recommendations.map((rec, idx) => `
+                <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" value="${rec.name}" onchange="recommendations[${idx}].name = this.value">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" value="${rec.location}" onchange="recommendations[${idx}].location = this.value">
+                    </div>
+                    <div class="form-group">
+                        <label>Details</label>
+                        <textarea onchange="recommendations[${idx}].details = this.value">${rec.details}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Google Maps Link</label>
+                        <input type="url" value="${rec.mapLink || ''}" onchange="recommendations[${idx}].mapLink = this.value">
+                    </div>
+                    <button class="btn btn-secondary" onclick="recommendations.splice(${idx}, 1); openEditRecommendationModal();">Delete</button>
+                </div>
+            `).join('');
+            document.getElementById('editRecommendationModal').classList.add('show');
+        }
+
+        function saveRecommendations() {
+            localStorage.setItem('recommendations', JSON.stringify(recommendations));
+            closeModal('editRecommendationModal');
+            renderRecommendations();
+        }
+
+        function openEditItineraryModal() {
+            const form = document.getElementById('editItineraryForm');
+            form.innerHTML = tripData.itinerary.map((day, idx) => `
+                <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <h4 style="margin-bottom: 10px;">Day ${day.day}</h4>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" value="${day.location}" onchange="tripData.itinerary[${idx}].location = this.value">
+                    </div>
+                    <div class="form-group">
+                        <label>Google Maps Link</label>
+                        <input type="url" value="${day.mapLink || ''}" onchange="tripData.itinerary[${idx}].mapLink = this.value">
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('editItineraryModal').classList.add('show');
+        }
+
+        function saveItinerary() {
+            localStorage.setItem('tripData', JSON.stringify(tripData));
+            closeModal('editItineraryModal');
+            renderItinerary();
+            renderLocations();
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
         }
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             renderItinerary();
-            renderOverview();
             renderLocations();
             renderRecommendations();
         });
