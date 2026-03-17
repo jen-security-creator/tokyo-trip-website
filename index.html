@@ -138,6 +138,7 @@
             border-radius: 12px;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
 
         .day-card:hover {
@@ -169,6 +170,24 @@
             opacity: 0.8;
         }
 
+        .day-card .edit-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s ease;
+        }
+
+        .day-card .edit-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
         .day-details {
             display: none;
             margin-top: 20px;
@@ -197,52 +216,6 @@
             font-size: 0.85em;
             opacity: 0.9;
             line-height: 1.4;
-        }
-
-        .charts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .chart-container {
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .chart-container h3 {
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 1.2em;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 24px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .stat-card .label {
-            font-size: 0.9em;
-            opacity: 0.9;
-            margin-bottom: 8px;
-        }
-
-        .stat-card .value {
-            font-size: 2em;
-            font-weight: bold;
         }
 
         .location-list {
@@ -363,6 +336,12 @@
             background: #ccc;
         }
 
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.85em;
+            margin: 5px 5px 5px 0;
+        }
+
         .form-group {
             margin-bottom: 15px;
         }
@@ -411,7 +390,7 @@
             background: white;
             padding: 30px;
             border-radius: 12px;
-            max-width: 500px;
+            max-width: 600px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
@@ -466,6 +445,51 @@
             background: #f8f9fa;
         }
 
+        .person-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin: 5px 5px 5px 0;
+            font-size: 0.9em;
+        }
+
+        .person-tag .remove {
+            margin-left: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .split-option {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .split-option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .split-option:hover {
+            border-color: #667eea;
+        }
+
+        .split-option h4 {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .split-option p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
         footer {
             text-align: center;
             color: white;
@@ -480,10 +504,6 @@
 
             header .trip-info {
                 gap: 20px;
-            }
-
-            .charts-grid {
-                grid-template-columns: 1fr;
             }
 
             .itinerary-grid {
@@ -510,10 +530,6 @@
                     <div class="label">Dates</div>
                     <div class="value">Apr 15-20, 2025</div>
                 </div>
-                <div class="info-item">
-                    <div class="label">Budget</div>
-                    <div class="value">¥500,000</div>
-                </div>
             </div>
         </header>
 
@@ -527,13 +543,22 @@
         <!-- Itinerary Tab -->
         <div id="itinerary" class="tab-content active">
             <h2 style="margin-bottom: 30px; color: #333;">Daily Itinerary</h2>
-            <button class="btn" onclick="openEditItineraryModal()">✏️ Edit Itinerary</button>
             <div class="itinerary-grid" id="itineraryGrid"></div>
         </div>
 
         <!-- Expenses Tab -->
         <div id="expenses" class="tab-content">
             <h2 style="margin-bottom: 30px; color: #333;">Expense Tracker</h2>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 30px;">
+                <h3 style="margin-bottom: 15px; color: #333;">👥 Trip Members</h3>
+                <div id="personsList" style="margin-bottom: 15px;"></div>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="newPersonName" placeholder="Enter person name" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                    <button class="btn" onclick="addPerson()">Add Person</button>
+                </div>
+            </div>
+
             <button class="btn" onclick="openAddExpenseModal()">➕ Add Expense</button>
             <div id="expensesList"></div>
             <div id="splitSummary"></div>
@@ -559,12 +584,12 @@
     </div>
 
     <!-- Modals -->
-    <div id="editItineraryModal" class="modal">
+    <div id="editDayModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">Edit Itinerary</div>
-            <div id="editItineraryForm"></div>
-            <button class="btn" onclick="saveItinerary()">Save Changes</button>
-            <button class="btn btn-secondary" onclick="closeModal('editItineraryModal')">Cancel</button>
+            <div class="modal-header">Edit Day Details</div>
+            <div id="editDayForm"></div>
+            <button class="btn" onclick="saveDayEdits()">Save Changes</button>
+            <button class="btn btn-secondary" onclick="closeModal('editDayModal')">Cancel</button>
         </div>
     </div>
 
@@ -581,11 +606,7 @@
             </div>
             <div class="form-group">
                 <label>Paid By</label>
-                <select id="expensePaidBy">
-                    <option value="Person 1">Person 1</option>
-                    <option value="Person 2">Person 2</option>
-                    <option value="Person 3">Person 3</option>
-                </select>
+                <select id="expensePaidBy"></select>
             </div>
             <div class="form-group">
                 <label>Category</label>
@@ -598,6 +619,15 @@
                     <option value="Other">Other</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label>Split Type</label>
+                <select id="expenseSplitType" onchange="updateSplitOptions()">
+                    <option value="equal">Equal Split</option>
+                    <option value="parts">By Parts (Percentages)</option>
+                    <option value="amount">By Amount</option>
+                </select>
+            </div>
+            <div id="splitOptionsContainer"></div>
             <button class="btn" onclick="addExpense()">Add Expense</button>
             <button class="btn btn-secondary" onclick="closeModal('addExpenseModal')">Cancel</button>
         </div>
@@ -680,7 +710,9 @@
             {name: "Tokyo Skytree", category: "Attraction", location: "Sumida", rating: 4.5, details: "Tallest structure in Japan", mapLink: "https://maps.google.com/maps?q=Tokyo+Skytree"}
         ];
 
+        let persons = JSON.parse(localStorage.getItem('persons')) || ["Person 1", "Person 2", "Person 3"];
         let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+        let currentEditingDay = null;
 
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -701,6 +733,7 @@
             const grid = document.getElementById('itineraryGrid');
             grid.innerHTML = tripData.itinerary.map((day, idx) => `
                 <div class="day-card" onclick="toggleDayDetails(${idx})">
+                    <button class="edit-btn" onclick="openEditDayModal(${idx}); event.stopPropagation();">✏️ Edit</button>
                     <h3>Day ${day.day}</h3>
                     <div class="date">${day.date}</div>
                     <div class="location">📍 ${day.location}</div>
@@ -721,6 +754,58 @@
         function toggleDayDetails(idx) {
             const details = document.getElementById(`details-${idx}`);
             details.classList.toggle('show');
+        }
+
+        function openEditDayModal(idx) {
+            currentEditingDay = idx;
+            const day = tripData.itinerary[idx];
+            const form = document.getElementById('editDayForm');
+            
+            form.innerHTML = `
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="editLocation" value="${day.location}">
+                </div>
+                <div class="form-group">
+                    <label>Google Maps Link</label>
+                    <input type="url" id="editMapLink" value="${day.mapLink || ''}">
+                </div>
+                <div style="margin-top: 20px; margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 15px;">Activities</h4>
+                    ${day.activities.map((act, actIdx) => `
+                        <div style="margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <div class="form-group">
+                                <label>Type</label>
+                                <input type="text" value="${act.type}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].type = this.value">
+                            </div>
+                            <div class="form-group">
+                                <label>Details</label>
+                                <input type="text" value="${act.details}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].details = this.value">
+                            </div>
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].activities.splice(${actIdx}, 1); openEditDayModal(${idx});">Delete Activity</button>
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="btn btn-secondary" onclick="addActivityToDay(${idx})">+ Add Activity</button>
+            `;
+            
+            document.getElementById('editDayModal').classList.add('show');
+        }
+
+        function addActivityToDay(idx) {
+            tripData.itinerary[idx].activities.push({type: "New Activity", details: ""});
+            openEditDayModal(idx);
+        }
+
+        function saveDayEdits() {
+            const idx = currentEditingDay;
+            tripData.itinerary[idx].location = document.getElementById('editLocation').value;
+            tripData.itinerary[idx].mapLink = document.getElementById('editMapLink').value;
+            
+            localStorage.setItem('tripData', JSON.stringify(tripData));
+            closeModal('editDayModal');
+            renderItinerary();
+            renderLocations();
         }
 
         function renderLocations() {
@@ -749,10 +834,47 @@
             `).join('');
         }
 
+        function renderPersonsList() {
+            const list = document.getElementById('personsList');
+            list.innerHTML = persons.map((person, idx) => `
+                <span class="person-tag">
+                    ${person}
+                    <span class="remove" onclick="removePerson(${idx})">✕</span>
+                </span>
+            `).join('');
+            
+            // Update payer dropdown
+            const select = document.getElementById('expensePaidBy');
+            select.innerHTML = persons.map(p => `<option value="${p}">${p}</option>`).join('');
+        }
+
+        function addPerson() {
+            const name = document.getElementById('newPersonName').value.trim();
+            if (!name) {
+                alert('Please enter a person name');
+                return;
+            }
+            if (persons.includes(name)) {
+                alert('This person is already added');
+                return;
+            }
+            persons.push(name);
+            localStorage.setItem('persons', JSON.stringify(persons));
+            document.getElementById('newPersonName').value = '';
+            renderPersonsList();
+        }
+
+        function removePerson(idx) {
+            persons.splice(idx, 1);
+            localStorage.setItem('persons', JSON.stringify(persons));
+            renderPersonsList();
+        }
+
         function renderExpenses() {
+            renderPersonsList();
             const list = document.getElementById('expensesList');
             if (expenses.length === 0) {
-                list.innerHTML = '<p style="color: #666; text-align: center;">No expenses added yet.</p>';
+                list.innerHTML = '<p style="color: #666; text-align: center; margin-top: 20px;">No expenses added yet.</p>';
             } else {
                 list.innerHTML = expenses.map((exp, idx) => `
                     <div class="expense-item">
@@ -760,12 +882,13 @@
                         <p><strong>Amount:</strong> ¥${exp.amount.toLocaleString()}</p>
                         <p><strong>Paid By:</strong> ${exp.paidBy}</p>
                         <p><strong>Category:</strong> ${exp.category}</p>
-                        <button class="btn btn-secondary" onclick="deleteExpense(${idx})">Delete</button>
+                        <p><strong>Split Type:</strong> ${exp.splitType === 'equal' ? 'Equal' : exp.splitType === 'parts' ? 'By Parts' : 'By Amount'}</p>
+                        ${exp.splitType !== 'equal' ? `<p><strong>Split Details:</strong> ${JSON.stringify(exp.splitDetails)}</p>` : ''}
+                        <button class="btn btn-secondary btn-small" onclick="deleteExpense(${idx})">Delete</button>
                     </div>
                 `).join('');
             }
 
-            // Calculate splits
             calculateSplits();
         }
 
@@ -776,45 +899,58 @@
                 return;
             }
 
-            // Get unique payers
-            const payers = [...new Set(expenses.map(e => e.paidBy))];
-            const totalByPayer = {};
-            const splits = {};
+            const balances = {};
+            persons.forEach(p => balances[p] = 0);
 
-            payers.forEach(payer => {
-                totalByPayer[payer] = expenses.filter(e => e.paidBy === payer).reduce((sum, e) => sum + e.amount, 0);
-                splits[payer] = 0;
+            expenses.forEach(exp => {
+                let splits = {};
+                
+                if (exp.splitType === 'equal') {
+                    const perPerson = exp.amount / persons.length;
+                    persons.forEach(p => splits[p] = perPerson);
+                } else if (exp.splitType === 'parts') {
+                    const totalParts = Object.values(exp.splitDetails).reduce((a, b) => a + b, 0);
+                    persons.forEach(p => {
+                        splits[p] = (exp.splitDetails[p] || 0) / totalParts * exp.amount;
+                    });
+                } else if (exp.splitType === 'amount') {
+                    splits = exp.splitDetails;
+                }
+
+                balances[exp.paidBy] += exp.amount;
+                persons.forEach(p => {
+                    if (p !== exp.paidBy) {
+                        balances[p] -= splits[p];
+                    }
+                });
             });
-
-            const totalExpense = Object.values(totalByPayer).reduce((a, b) => a + b, 0);
-            const perPerson = totalExpense / payers.length;
 
             let splitHTML = `
                 <div style="margin-top: 30px; background: #f8f9fa; padding: 20px; border-radius: 12px;">
-                    <h3 style="margin-bottom: 20px; color: #333;">💰 Expense Summary & Split</h3>
-                    <p style="margin-bottom: 15px; color: #666;"><strong>Total Expenses:</strong> ¥${totalExpense.toLocaleString()}</p>
-                    <p style="margin-bottom: 20px; color: #666;"><strong>Per Person:</strong> ¥${perPerson.toLocaleString()}</p>
+                    <h3 style="margin-bottom: 20px; color: #333;">💰 Expense Summary & Settlement</h3>
                     <table class="split-table">
                         <thead>
                             <tr>
                                 <th>Person</th>
-                                <th>Paid</th>
-                                <th>Should Pay</th>
-                                <th>Owes/Owed</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
             `;
 
-            payers.forEach(payer => {
-                const paid = totalByPayer[payer];
-                const owes = paid - perPerson;
-                const status = owes > 0 ? `🟢 Owed ¥${owes.toLocaleString()}` : `🔴 Owes ¥${Math.abs(owes).toLocaleString()}`;
+            persons.forEach(person => {
+                const balance = balances[person];
+                let status = '';
+                if (Math.abs(balance) < 0.01) {
+                    status = '✅ Settled';
+                } else if (balance > 0) {
+                    status = `🟢 Owed ¥${Math.abs(balance).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
+                } else {
+                    status = `🔴 Owes ¥${Math.abs(balance).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
+                }
                 splitHTML += `
                     <tr>
-                        <td>${payer}</td>
-                        <td>¥${paid.toLocaleString()}</td>
-                        <td>¥${perPerson.toLocaleString()}</td>
+                        <td>${person}</td>
                         <td>${status}</td>
                     </tr>
                 `;
@@ -831,6 +967,40 @@
 
         function openAddExpenseModal() {
             document.getElementById('addExpenseModal').classList.add('show');
+            updateSplitOptions();
+        }
+
+        function updateSplitOptions() {
+            const splitType = document.getElementById('expenseSplitType').value;
+            const container = document.getElementById('splitOptionsContainer');
+            
+            if (splitType === 'equal') {
+                container.innerHTML = '<p style="color: #666; font-size: 0.9em;">Expense will be split equally among all members.</p>';
+            } else if (splitType === 'parts') {
+                container.innerHTML = `
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <p style="margin-bottom: 15px; font-weight: 600;">Enter percentage for each person:</p>
+                        ${persons.map(p => `
+                            <div class="form-group">
+                                <label>${p} (%)</label>
+                                <input type="number" id="part_${p}" placeholder="0" min="0" max="100" value="0">
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (splitType === 'amount') {
+                container.innerHTML = `
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <p style="margin-bottom: 15px; font-weight: 600;">Enter amount for each person:</p>
+                        ${persons.map(p => `
+                            <div class="form-group">
+                                <label>${p} (¥)</label>
+                                <input type="number" id="amount_${p}" placeholder="0" min="0" value="0">
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
         }
 
         function addExpense() {
@@ -838,13 +1008,35 @@
             const amount = parseFloat(document.getElementById('expenseAmount').value);
             const paidBy = document.getElementById('expensePaidBy').value;
             const category = document.getElementById('expenseCategory').value;
+            const splitType = document.getElementById('expenseSplitType').value;
 
             if (!desc || !amount || amount <= 0) {
                 alert('Please fill in all fields correctly');
                 return;
             }
 
-            expenses.push({ description: desc, amount, paidBy, category });
+            let splitDetails = {};
+            if (splitType === 'equal') {
+                persons.forEach(p => splitDetails[p] = 1);
+            } else if (splitType === 'parts') {
+                persons.forEach(p => {
+                    splitDetails[p] = parseFloat(document.getElementById(`part_${p}`).value) || 0;
+                });
+                if (Object.values(splitDetails).reduce((a, b) => a + b, 0) === 0) {
+                    alert('Please enter at least one percentage');
+                    return;
+                }
+            } else if (splitType === 'amount') {
+                persons.forEach(p => {
+                    splitDetails[p] = parseFloat(document.getElementById(`amount_${p}`).value) || 0;
+                });
+                if (Object.values(splitDetails).reduce((a, b) => a + b, 0) === 0) {
+                    alert('Please enter at least one amount');
+                    return;
+                }
+            }
+
+            expenses.push({ description: desc, amount, paidBy, category, splitType, splitDetails });
             localStorage.setItem('expenses', JSON.stringify(expenses));
 
             document.getElementById('expenseDesc').value = '';
@@ -907,7 +1099,7 @@
                         <label>Google Maps Link</label>
                         <input type="url" value="${rec.mapLink || ''}" onchange="recommendations[${idx}].mapLink = this.value">
                     </div>
-                    <button class="btn btn-secondary" onclick="recommendations.splice(${idx}, 1); openEditRecommendationModal();">Delete</button>
+                    <button class="btn btn-secondary btn-small" onclick="recommendations.splice(${idx}, 1); openEditRecommendationModal();">Delete</button>
                 </div>
             `).join('');
             document.getElementById('editRecommendationModal').classList.add('show');
@@ -919,31 +1111,6 @@
             renderRecommendations();
         }
 
-        function openEditItineraryModal() {
-            const form = document.getElementById('editItineraryForm');
-            form.innerHTML = tripData.itinerary.map((day, idx) => `
-                <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
-                    <h4 style="margin-bottom: 10px;">Day ${day.day}</h4>
-                    <div class="form-group">
-                        <label>Location</label>
-                        <input type="text" value="${day.location}" onchange="tripData.itinerary[${idx}].location = this.value">
-                    </div>
-                    <div class="form-group">
-                        <label>Google Maps Link</label>
-                        <input type="url" value="${day.mapLink || ''}" onchange="tripData.itinerary[${idx}].mapLink = this.value">
-                    </div>
-                </div>
-            `).join('');
-            document.getElementById('editItineraryModal').classList.add('show');
-        }
-
-        function saveItinerary() {
-            localStorage.setItem('tripData', JSON.stringify(tripData));
-            closeModal('editItineraryModal');
-            renderItinerary();
-            renderLocations();
-        }
-
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('show');
         }
@@ -953,6 +1120,7 @@
             renderItinerary();
             renderLocations();
             renderRecommendations();
+            renderPersonsList();
         });
     </script>
 </body>
