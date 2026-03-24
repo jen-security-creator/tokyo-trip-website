@@ -1094,19 +1094,27 @@
                         <div class="accommodation-section">
                             <h4>🏨 ACCOMMODATION</h4>
                             <div class="accommodation-info">
-                                <strong>${day.accommodation.name}</strong><br>
-                                ${day.accommodation.location}
+                                <div style="display: flex; justify-content: space-between; align-items: start;">
+                                    <div>
+                                        <strong>${day.accommodation.name}</strong><br>
+                                        ${day.accommodation.location}
+                                    </div>
+                                    ${day.accommodation.mapLink ? `<a href="${day.accommodation.mapLink}" target="_blank" style="display: inline-block; padding: 6px 12px; background: #000; color: #fff; text-decoration: none; font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 2px; white-space: nowrap;">📍 Maps</a>` : ''}
+                                </div>
                             </div>
                         </div>
 
                         <div class="meal-section">
                             <h4>BREAKFAST</h4>
                             ${day.breakfast.map((meal, mIdx) => `
-                                <div class="meal-option">
-                                    <input type="radio" id="breakfast_${idx}_${mIdx}" name="breakfast_${idx}" value="${meal.name}" 
-                                        ${selectedMeals[`breakfast_${idx}`] === meal.name ? 'checked' : ''}
-                                        onchange="saveMealSelection('breakfast_${idx}', '${meal.name}')">
-                                    <label for="breakfast_${idx}_${mIdx}">${meal.name}</label>
+                                <div class="meal-option" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; align-items: center; flex: 1;">
+                                        <input type="radio" id="breakfast_${idx}_${mIdx}" name="breakfast_${idx}" value="${meal.name}" 
+                                            ${selectedMeals[`breakfast_${idx}`] === meal.name ? 'checked' : ''}
+                                            onchange="saveMealSelection('breakfast_${idx}', '${meal.name}')">
+                                        <label for="breakfast_${idx}_${mIdx}" style="margin-left: 8px;">${meal.name}</label>
+                                    </div>
+                                    ${meal.mapLink ? `<a href="${meal.mapLink}" target="_blank" style="padding: 4px 8px; background: #000; color: #fff; text-decoration: none; font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 2px; white-space: nowrap;">📍</a>` : ''}
                                 </div>
                             `).join('')}
                         </div>
@@ -1114,11 +1122,14 @@
                         <div class="meal-section">
                             <h4>LUNCH</h4>
                             ${day.lunch.map((meal, mIdx) => `
-                                <div class="meal-option">
-                                    <input type="radio" id="lunch_${idx}_${mIdx}" name="lunch_${idx}" value="${meal.name}"
-                                        ${selectedMeals[`lunch_${idx}`] === meal.name ? 'checked' : ''}
-                                        onchange="saveMealSelection('lunch_${idx}', '${meal.name}')">
-                                    <label for="lunch_${idx}_${mIdx}">${meal.name}</label>
+                                <div class="meal-option" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; align-items: center; flex: 1;">
+                                        <input type="radio" id="lunch_${idx}_${mIdx}" name="lunch_${idx}" value="${meal.name}"
+                                            ${selectedMeals[`lunch_${idx}`] === meal.name ? 'checked' : ''}
+                                            onchange="saveMealSelection('lunch_${idx}', '${meal.name}')">
+                                        <label for="lunch_${idx}_${mIdx}" style="margin-left: 8px;">${meal.name}</label>
+                                    </div>
+                                    ${meal.mapLink ? `<a href="${meal.mapLink}" target="_blank" style="padding: 4px 8px; background: #000; color: #fff; text-decoration: none; font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 2px; white-space: nowrap;">📍</a>` : ''}
                                 </div>
                             `).join('')}
                         </div>
@@ -1126,11 +1137,14 @@
                         <div class="meal-section">
                             <h4>DINNER</h4>
                             ${day.dinner.map((meal, mIdx) => `
-                                <div class="meal-option">
-                                    <input type="radio" id="dinner_${idx}_${mIdx}" name="dinner_${idx}" value="${meal.name}"
-                                        ${selectedMeals[`dinner_${idx}`] === meal.name ? 'checked' : ''}
-                                        onchange="saveMealSelection('dinner_${idx}', '${meal.name}')">
-                                    <label for="dinner_${idx}_${mIdx}">${meal.name}</label>
+                                <div class="meal-option" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; align-items: center; flex: 1;">
+                                        <input type="radio" id="dinner_${idx}_${mIdx}" name="dinner_${idx}" value="${meal.name}"
+                                            ${selectedMeals[`dinner_${idx}`] === meal.name ? 'checked' : ''}
+                                            onchange="saveMealSelection('dinner_${idx}', '${meal.name}')">
+                                        <label for="dinner_${idx}_${mIdx}" style="margin-left: 8px;">${meal.name}</label>
+                                    </div>
+                                    ${meal.mapLink ? `<a href="${meal.mapLink}" target="_blank" style="padding: 4px 8px; background: #000; color: #fff; text-decoration: none; font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 2px; white-space: nowrap;">📍</a>` : ''}
                                 </div>
                             `).join('')}
                         </div>
@@ -1145,7 +1159,7 @@
                                     </div>
                                     ${act.details ? `<div class="activity-details">${act.details}</div>` : ''}
                                     ${act.remarks ? `<div class="activity-remarks">${act.remarks}</div>` : ''}
-                                    ${act.mapLink ? `<div class="activity-maps"><a href="${act.mapLink}" target="_blank">VIEW ON MAP</a></div>` : ''}
+                                    ${act.mapLink ? `<div class="activity-maps"><a href="${act.mapLink}" target="_blank" style="display: inline-block; padding: 6px 12px; background: #000; color: #fff; text-decoration: none; font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 2px;">📍 Google Maps</a></div>` : ''}
                                 </div>
                             `).join('')}
                         </div>
