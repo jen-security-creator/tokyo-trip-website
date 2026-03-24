@@ -776,156 +776,347 @@
     <script>
         // Initialize data from localStorage
         let tripData = JSON.parse(localStorage.getItem('tripData')) || {
-            "trip_name": "Tokyo Trip 2025",
-            "start_date": "15/04/2025",
-            "end_date": "20/04/2025",
+            "trip_name": "Tokyo Trip 2026",
+            "start_date": "15/04/2026 (Wed)",
+            "end_date": "20/04/2026 (Mon)",
             "duration_days": 6,
             "itinerary": [
-                {
-                    "day": 1, "date": "15/04/2025 (Wed)", "location": "東京", "mapLink": "https://maps.google.com/maps?q=Tokyo",
-                    "accommodation": {name: "Hotel Tokyo", location: "Shinjuku"},
-                    "breakfast": [
-                        {name: "ブリコラージュ ブレッド アンド カンパニー", mapLink: ""},
-                        {name: "Starbucks Shinjuku", mapLink: "https://maps.google.com/maps?q=Starbucks+Shinjuku"}
-                    ],
-                    "lunch": [
-                        {name: "Ramen Afro Beats", mapLink: ""},
-                        {name: "麺屋海神", mapLink: ""}
-                    ],
-                    "dinner": [
-                        {name: "最上階 夜景 居酒屋 空海", mapLink: ""},
-                        {name: "Izakaya Shinjuku", mapLink: ""}
-                    ],
-                    "activities": [
-                        {type: "アルペントーキョー [Alpen TOKYO]", time: "Morning", details: "Shopping", remarks: "", mapLink: "https://maps.google.com/maps?q=Alpen+Tokyo"},
-                        {type: "模型車店 ミニカーショップ ケンボックス", time: "Morning", details: "Model car shop", remarks: "", mapLink: ""},
-                        {type: "新宿 北村写真機店", time: "Afternoon", details: "Camera shop", remarks: "", mapLink: ""},
-                        {type: "Tomica Shop", time: "Afternoon", details: "Toy car shopping", remarks: "", mapLink: ""},
-                        {type: "Luck Rack イオンモール幕張新都心店", time: "Afternoon", details: "Shopping mall", remarks: "", mapLink: ""},
-                        {type: "Go-Kart Harbor Circuit", time: "Night", details: "Go-kart racing", remarks: "", mapLink: ""}
-                    ]
-                },
-                {
-                    "day": 2, "date": "16/04/2025 (Thurs)", "location": "東京 > 富士 / 御殿場", "mapLink": "https://maps.google.com/maps?q=Fuji+Speedway",
-                    "accommodation": {name: "Fuji Hotel", location: "Gotemba"},
-                    "breakfast": [
-                        {name: "Hotel Breakfast", mapLink: ""},
-                        {name: "Convenience Store", mapLink: ""}
-                    ],
-                    "lunch": [
-                        {name: "THE OUTLETS SHONAN HIRATSUKA", mapLink: ""},
-                        {name: "Local Ramen", mapLink: ""}
-                    ],
-                    "dinner": [
-                        {name: "BBQ", mapLink: ""},
-                        {name: "Yakiniku Restaurant", mapLink: ""}
-                    ],
-                    "activities": [
-                        {type: "埼玉 鉄道博物館", time: "Morning", details: "Railway museum", remarks: "", mapLink: ""},
-                        {type: "GENERAL STORE RAILYARD 大宮", time: "Morning", details: "Train store", remarks: "", mapLink: ""},
-                        {type: "Drive to Fuji", time: "Afternoon", details: "2 hours drive", remarks: "", mapLink: ""},
-                        {type: "RECAMP 富士スピードウェイ", time: "Afternoon", details: "Fuji Speedway", remarks: "", mapLink: ""},
-                        {type: "Fuji Motor Sports Museum", time: "Afternoon", details: "Car museum", remarks: "", mapLink: ""},
-                        {type: "御殿場 Outlet", time: "Afternoon", details: "Shopping", remarks: "", mapLink: ""}
-                    ]
-                },
-                {
-                    "day": 3, "date": "17/04/2025 (Fri)", "location": "富士 > 箱根 > 伊豆", "mapLink": "https://maps.google.com/maps?q=Hakone",
-                    "accommodation": {name: "Izu Onsen Hotel", location: "Izu"},
-                    "breakfast": [
-                        {name: "Cook", mapLink: ""},
-                        {name: "Breakfast Set", mapLink: ""}
-                    ],
-                    "lunch": [
-                        {name: "銀の穂", mapLink: ""},
-                        {name: "cafe KOMON", mapLink: ""}
-                    ],
-                    "dinner": [
-                        {name: "和食かっぽれ", mapLink: ""},
-                        {name: "Hot Pot", mapLink: ""}
-                    ],
-                    "activities": [
-                        {type: "Fuji Speedway", time: "Morning", details: "Racing circuit", remarks: "", mapLink: ""},
-                        {type: "棠陽神社", time: "Morning", details: "Shrine visit", remarks: "", mapLink: ""},
-                        {type: "富士 > 長尾峠 > 箱根", time: "Afternoon", details: "Scenic drive", remarks: "", mapLink: ""},
-                        {type: "箱根神社 & 大観山展望台", time: "Afternoon", details: "Shrine and viewpoint", remarks: "", mapLink: ""},
-                        {type: "芦ノ湖Skyline", time: "Afternoon", details: "Lake scenic route", remarks: "", mapLink: ""},
-                        {type: "Drive to Izu", time: "Night", details: "Evening drive", remarks: "", mapLink: ""}
-                    ]
-                },
-                {
-                    "day": 4, "date": "18/04/2025 (Sat)", "location": "伊豆 > 東京", "mapLink": "https://maps.google.com/maps?q=Izu+Shizuoka",
-                    "accommodation": {name: "Yokohama Hotel", location: "Yokohama"},
-                    "breakfast": [
-                        {name: "朝食", mapLink: ""},
-                        {name: "Breakfast Buffet", mapLink: ""}
-                    ],
-                    "lunch": [
-                        {name: "こうげん寿し", mapLink: ""},
-                        {name: "磯料理", mapLink: ""}
-                    ],
-                    "dinner": [
-                        {name: "江ノ島 Seafood", mapLink: ""},
-                        {name: "横浜 Ramen", mapLink: ""}
-                    ],
-                    "activities": [
-                        {type: "大室山登山リフト", time: "Morning", details: "Mountain lift", remarks: "", mapLink: ""},
-                        {type: "伊豆シャボテン動物公園", time: "Morning", details: "Zoo and botanical garden", remarks: "", mapLink: ""},
-                        {type: "小室山リッジウォーク", time: "Afternoon", details: "Ridge walk", remarks: "", mapLink: ""},
-                        {type: "Drive to Yokohama", time: "Afternoon", details: "Travel to coast", remarks: "", mapLink: ""},
-                        {type: "新江ノ島水族館", time: "Afternoon", details: "Aquarium", remarks: "", mapLink: ""},
-                        {type: "Stay in Yokohama", time: "Night", details: "Overnight", remarks: "", mapLink: ""}
-                    ]
-                },
-                {
-                    "day": 5, "date": "19/04/2025 (Sun)", "location": "東京 > 秋名 > 東京", "mapLink": "https://maps.google.com/maps?q=Haruna+Mountain",
-                    "accommodation": {name: "Tokyo Hotel", location: "Shinjuku"},
-                    "breakfast": [
-                        {name: "Early Breakfast", mapLink: ""},
-                        {name: "Convenience Store", mapLink: ""}
-                    ],
-                    "lunch": [
-                        {name: "Mountain Lunch", mapLink: ""},
-                        {name: "Local Restaurant", mapLink: ""}
-                    ],
-                    "dinner": [
-                        {name: "Hot Pot", mapLink: ""},
-                        {name: "Sukiyaki", mapLink: ""}
-                    ],
-                    "activities": [
-                        {type: "JDM Car Rental", time: "Morning", details: "Pick up rental car", remarks: "", mapLink: ""},
-                        {type: "おもしろレンタカー 野田本店", time: "Morning", details: "Rental shop", remarks: "", mapLink: ""},
-                        {type: "Drive to Gunma", time: "Afternoon", details: "Head to mountains", remarks: "", mapLink: ""},
-                        {type: "榛名山 ヤセオネ峠", time: "Afternoon", details: "Mountain pass driving", remarks: "", mapLink: ""},
-                        {type: "Return to Tokyo", time: "Afternoon", details: "Drive back", remarks: "", mapLink: ""},
-                        {type: "Return JDM Car", time: "Night", details: "Return rental", remarks: "", mapLink: ""}
-                    ]
-                },
-                {
-                    "day": 6, "date": "20/04/2025 (Mon)", "location": "東京", "mapLink": "https://maps.google.com/maps?q=Toyosu+Tokyo",
-                    "accommodation": {name: "Airport Hotel", location: "Narita"},
-                    "breakfast": [
-                        {name: "豊洲市場", mapLink: ""},
-                        {name: "Sushi Breakfast", mapLink: ""}
-                    ],
-                    "lunch": [
-                        {name: "WE ARE THE FARM 豊洲", mapLink: ""},
-                        {name: "Ramen", mapLink: ""}
-                    ],
-                    "dinner": [
-                        {name: "Airport Dinner", mapLink: ""},
-                        {name: "Izakaya", mapLink: ""}
-                    ],
-                    "activities": [
-                        {type: "豊洲市場", time: "Morning", details: "Fish market", remarks: "", mapLink: ""},
-                        {type: "Urban Dock LaLaport Toyosu", time: "Morning", details: "Shopping mall", remarks: "", mapLink: ""},
-                        {type: "Return to Airport", time: "Afternoon", details: "Head to airport", remarks: "", mapLink: ""},
-                        {type: "SMALL WORLDS Miniature Museum", time: "Afternoon", details: "Museum", remarks: "", mapLink: ""},
-                        {type: "Tokyo Joypolis", time: "Afternoon", details: "Theme park", remarks: "", mapLink: ""}
-                    ]
-                }
+                        {
+                                    "day": 1,
+                                    "date": "15/04/2026 (Wed)",
+                                    "location": "東京",
+                                    "mapLink": "https://maps.google.com",
+                                    "accommodation": {
+                                                "name": "Hotel",
+                                                "location": "TBD"
+                                    },
+                                    "breakfast": [
+                                                {
+                                                            "name": "[川崎]",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "name": "Eggs ’n Things ラゾーナ川崎店",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "lunch": [
+                                                {
+                                                            "name": "[江ノ島]",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "name": "きむら / 海鮮 江之島小屋",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "dinner": [
+                                                {
+                                                            "name": "TBD",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "activities": [
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Morning",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Afternoon",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Night",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                }
+                                    ]
+                        },
+                        {
+                                    "day": 2,
+                                    "date": "16/04/2026 (Thu)",
+                                    "location": "東京 > 秋名 > 東京",
+                                    "mapLink": "https://maps.google.com",
+                                    "accommodation": {
+                                                "name": "Hotel",
+                                                "location": "TBD"
+                                    },
+                                    "breakfast": [
+                                                {
+                                                            "name": "TBD",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "lunch": [
+                                                {
+                                                            "name": "[伊豆/伊東]",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "name": "こうげん寿し / 磯料理　開福丸",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "dinner": [
+                                                {
+                                                            "name": "箱根神社",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "name": "日本、〒250-0522 神奈川県足柄下郡箱根町元箱根８０−１",
+                                                            "mapLink": "https://maps.app.goo.gl/rtPJcfyCepSsQ43WA"
+                                                }
+                                    ],
+                                    "activities": [
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Morning",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Afternoon",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Night",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                }
+                                    ]
+                        },
+                        {
+                                    "day": 3,
+                                    "date": "17/04/2026 (Fri)",
+                                    "location": "東京 > 富士 / 御殿場",
+                                    "mapLink": "https://maps.google.com",
+                                    "accommodation": {
+                                                "name": "Hotel",
+                                                "location": "TBD"
+                                    },
+                                    "breakfast": [
+                                                {
+                                                            "name": "Cook",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "lunch": [
+                                                {
+                                                            "name": "[御殿場]",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "name": "つけ麺　白虎 / とんかつ 壱 / 肉汁うどん まえはら / 手打そば 金太郎 御殿場本店",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "dinner": [
+                                                {
+                                                            "name": "TBD",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "activities": [
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Morning",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Afternoon",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Night",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                }
+                                    ]
+                        },
+                        {
+                                    "day": 4,
+                                    "date": "18/04/2026 (Sat)",
+                                    "location": "富士 > 箱根 > 伊豆",
+                                    "mapLink": "https://maps.google.com",
+                                    "accommodation": {
+                                                "name": "Hotel",
+                                                "location": "TBD"
+                                    },
+                                    "breakfast": [
+                                                {
+                                                            "name": "TBD",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "lunch": [
+                                                {
+                                                            "name": "TBD",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "dinner": [
+                                                {
+                                                            "name": "Tomica Shop",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "name": "トミカショップ 東京キャラクターストリート店",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "activities": [
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Morning",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Afternoon",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Night",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                }
+                                    ]
+                        },
+                        {
+                                    "day": 5,
+                                    "date": "19/04/2026 (Sun)",
+                                    "location": "伊豆 > 東京",
+                                    "mapLink": "https://maps.google.com",
+                                    "accommodation": {
+                                                "name": "Hotel",
+                                                "location": "TBD"
+                                    },
+                                    "breakfast": [
+                                                {
+                                                            "name": "TBD",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "lunch": [
+                                                {
+                                                            "name": "TBD",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "dinner": [
+                                                {
+                                                            "name": "群馬 > 東京",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "activities": [
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Morning",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Afternoon",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Night",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                }
+                                    ]
+                        },
+                        {
+                                    "day": 6,
+                                    "date": "20/04/2026 (Mon)",
+                                    "location": "東京",
+                                    "mapLink": "https://maps.google.com",
+                                    "accommodation": {
+                                                "name": "Hotel",
+                                                "location": "TBD"
+                                    },
+                                    "breakfast": [
+                                                {
+                                                            "name": "豊洲市場",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "name": "日本、〒135-0061 東京都江東区豊洲６丁目６−１ 5:00-17:00",
+                                                            "mapLink": "https://maps.app.goo.gl/f1WbvehcHAn6ZtDf8"
+                                                }
+                                    ],
+                                    "lunch": [
+                                                {
+                                                            "name": "WE ARE THE FARM 豊洲 (ららぽーと豊洲3 1F)",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "dinner": [
+                                                {
+                                                            "name": "TBD",
+                                                            "mapLink": ""
+                                                }
+                                    ],
+                                    "activities": [
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Morning",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Afternoon",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                },
+                                                {
+                                                            "type": "Activity",
+                                                            "time": "Night",
+                                                            "details": "",
+                                                            "remarks": "",
+                                                            "mapLink": ""
+                                                }
+                                    ]
+                        }
             ]
-        };
+};
 
         let recommendations = JSON.parse(localStorage.getItem('recommendations')) || [
             {name: "Tsukiji Outer Market", category: "Food", location: "Chuo, Tokyo", rating: 4.5, details: "Fresh seafood and sushi", mapLink: "https://maps.google.com/maps?q=Tsukiji+Market"},
