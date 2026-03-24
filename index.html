@@ -1044,6 +1044,93 @@
         let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
         let currentEditingDay = null;
         let selectedMeals = JSON.parse(localStorage.getItem('selectedMeals')) || {};
+        
+        // GitHub API Configuration
+        const GITHUB_API_URL = 'http://localhost:3001/api';
+        const AUTO_SYNC_ENABLED = true;
+        
+        // GitHub Sync Functions
+        async function syncToGitHub(dataType) {
+            if (!AUTO_SYNC_ENABLED) return;
+            
+            try {
+                let data = {};
+                if (dataType === 'expenses') {
+                    data = { expenses, persons };
+                } else if (dataType === 'itinerary') {
+                    data = { tripData };
+                } else if (dataType === 'recommendations') {
+                    data = { recommendations };
+                }
+                
+                const response = await fetch(`${GITHUB_API_URL}/save-to-github`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data, dataType })
+                });
+                
+                if (response.ok) {
+                    console.log(`✓ Synced ${dataType} to GitHub`);
+                    showSyncNotification(`${dataType} saved to GitHub`);
+                } else {
+                    console.error(`Failed to sync ${dataType}`);
+                }
+            } catch (error) {
+                console.error('GitHub sync error:', error);
+                // Fail silently - don't disrupt user experience
+            }
+        }
+        
+        async function loadFromGitHub(dataType) {
+            try {
+                const response = await fetch(`${GITHUB_API_URL}/load-from-github/${dataType}`);
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log(`✓ Loaded ${dataType} from GitHub`);
+                    return result.data;
+                }
+            } catch (error) {
+                console.error('GitHub load error:', error);
+            }
+            return null;
+        }
+        
+        function showSyncNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #000;
+                color: #fff;
+                padding: 12px 20px;
+                border-radius: 4px;
+                font-size: 0.9em;
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+        
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(400px); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(400px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
 
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -1334,6 +1421,7 @@
             }
             persons.push(name);
             localStorage.setItem('persons', JSON.stringify(persons));
+            syncToGitHub('expenses'); // Sync persons to GitHub
             document.getElementById('newPersonName').value = '';
             renderPersonsList();
         }
@@ -1341,6 +1429,7 @@
         function removePerson(idx) {
             persons.splice(idx, 1);
             localStorage.setItem('persons', JSON.stringify(persons));
+            syncToGitHub('expenses'); // Sync persons to GitHub
             renderPersonsList();
         }
 
@@ -1565,6 +1654,7 @@
 
             expenses.push({ description: desc, amount, currency, paidBy, category, splitType, splitDetails });
             localStorage.setItem('expenses', JSON.stringify(expenses));
+            syncToGitHub('expenses'); // Sync to GitHub
 
             document.getElementById('expenseDesc').value = '';
             document.getElementById('expenseAmount').value = '';
@@ -1576,6 +1666,7 @@
         function deleteExpense(idx) {
             expenses.splice(idx, 1);
             localStorage.setItem('expenses', JSON.stringify(expenses));
+            syncToGitHub('expenses'); // Sync to GitHub
             renderExpenses();
             updateExpenseSummary();
         }
