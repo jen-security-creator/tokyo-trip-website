@@ -850,7 +850,14 @@
                 <input type="text" id="expenseDesc" placeholder="e.g., Dinner at restaurant">
             </div>
             <div class="form-group">
-                <label>Amount (¥)</label>
+                <label>Currency</label>
+                <select id="expenseCurrency">
+                    <option value="JPY">JPY (Japanese Yen)</option>
+                    <option value="HKD">HKD (Hong Kong Dollar)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Amount</label>
                 <input type="number" id="expenseAmount" placeholder="0" min="0">
             </div>
             <div class="form-group">
@@ -1063,9 +1070,9 @@
                 ? Object.keys(categoryTotals).reduce((a, b) => categoryTotals[a] > categoryTotals[b] ? a : b)
                 : '-';
 
-            document.getElementById('totalExpenses').textContent = `¥${totalExpenses.toLocaleString()}`;
+            document.getElementById('totalExpenses').textContent = `HK$${(totalExpenses * 0.05).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
             document.getElementById('expenseCount').textContent = expenseCount;
-            document.getElementById('avgPerPerson').textContent = `¥${avgPerPerson.toLocaleString('en-US', {maximumFractionDigits: 0})}`;
+            document.getElementById('avgPerPerson').textContent = `HK$${(avgPerPerson * 0.05).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
             document.getElementById('highestCategory').textContent = highestCategory;
         }
 
@@ -1328,7 +1335,7 @@
                 list.innerHTML = expenses.map((exp, idx) => `
                     <div class="expense-item">
                         <h4>${exp.description}</h4>
-                        <p><strong>Amount:</strong> ¥${exp.amount.toLocaleString()}</p>
+                        <p><strong>Amount:</strong> ${exp.currency === 'JPY' ? '¥' + exp.amount.toLocaleString() : 'HK$' + (exp.amount).toLocaleString()} (${exp.currency})</p>
                         <p><strong>Paid By:</strong> ${exp.paidBy}</p>
                         <p><strong>Category:</strong> ${exp.category}</p>
                         <p><strong>Split Type:</strong> ${exp.splitType === 'equal' ? 'Equal' : exp.splitType === 'parts' ? 'By Parts' : 'By Amount'}</p>
@@ -1392,9 +1399,9 @@
                 if (Math.abs(balance) < 0.01) {
                     status = '✓ SETTLED';
                 } else if (balance > 0) {
-                    status = `OWED ¥${Math.abs(balance).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
+                    status = `OWED HK$${(Math.abs(balance) * 0.05).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
                 } else {
-                    status = `OWES ¥${Math.abs(balance).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
+                    status = `OWES HK$${(Math.abs(balance) * 0.05).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
                 }
                 splitHTML += `
                     <tr>
@@ -1453,6 +1460,7 @@
 
         function addExpense() {
             const desc = document.getElementById('expenseDesc').value;
+            const currency = document.getElementById('expenseCurrency').value;
             const amount = parseFloat(document.getElementById('expenseAmount').value);
             const paidBy = document.getElementById('expensePaidBy').value;
             const category = document.getElementById('expenseCategory').value;
@@ -1484,7 +1492,7 @@
                 }
             }
 
-            expenses.push({ description: desc, amount, paidBy, category, splitType, splitDetails });
+            expenses.push({ description: desc, amount, currency, paidBy, category, splitType, splitDetails });
             localStorage.setItem('expenses', JSON.stringify(expenses));
 
             document.getElementById('expenseDesc').value = '';
