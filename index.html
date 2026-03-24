@@ -239,6 +239,25 @@
             display: block;
         }
 
+        .accommodation-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .accommodation-section h4 {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .accommodation-info {
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
         .meal-section {
             margin-bottom: 20px;
             padding: 15px;
@@ -285,16 +304,37 @@
             border-radius: 8px;
         }
 
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+
         .activity-type {
             font-weight: 600;
-            margin-bottom: 4px;
             font-size: 0.95em;
+        }
+
+        .activity-time {
+            font-size: 0.85em;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
         }
 
         .activity-details {
             font-size: 0.85em;
             opacity: 0.9;
             line-height: 1.4;
+            margin-bottom: 6px;
+        }
+
+        .activity-remarks {
+            font-size: 0.8em;
+            opacity: 0.7;
+            font-style: italic;
+            margin-bottom: 6px;
         }
 
         .activity-maps {
@@ -743,6 +783,7 @@
             "itinerary": [
                 {
                     "day": 1, "date": "15/04/2025 (Wed)", "location": "東京", "mapLink": "https://maps.google.com/maps?q=Tokyo",
+                    "accommodation": {name: "Hotel Tokyo", location: "Shinjuku"},
                     "breakfast": [
                         {name: "ブリコラージュ ブレッド アンド カンパニー", mapLink: ""},
                         {name: "Starbucks Shinjuku", mapLink: "https://maps.google.com/maps?q=Starbucks+Shinjuku"}
@@ -756,18 +797,17 @@
                         {name: "Izakaya Shinjuku", mapLink: ""}
                     ],
                     "activities": [
-                        {type: "Morning", details: "アルペントーキョー [Alpen TOKYO]", mapLink: "https://maps.google.com/maps?q=Alpen+Tokyo"},
-                        {type: "Activity", details: "模型車店 ミニカーショップ ケンボックス", mapLink: ""},
-                        {type: "Activity", details: "新宿 北村写真機店", mapLink: ""},
-                        {type: "Afternoon", details: "Arrives in Tokyo & Car Rental", mapLink: ""},
-                        {type: "Activity", details: "Tomica Shop", mapLink: ""},
-                        {type: "Activity", details: "Luck Rack イオンモール幕張新都心店", mapLink: ""},
-                        {type: "Activity", details: "Go-Kart Harbor Circuit", mapLink: ""},
-                        {type: "Night", details: "Stay near JDM area", mapLink: ""}
+                        {type: "アルペントーキョー [Alpen TOKYO]", time: "Morning", details: "Shopping", remarks: "", mapLink: "https://maps.google.com/maps?q=Alpen+Tokyo"},
+                        {type: "模型車店 ミニカーショップ ケンボックス", time: "Morning", details: "Model car shop", remarks: "", mapLink: ""},
+                        {type: "新宿 北村写真機店", time: "Afternoon", details: "Camera shop", remarks: "", mapLink: ""},
+                        {type: "Tomica Shop", time: "Afternoon", details: "Toy car shopping", remarks: "", mapLink: ""},
+                        {type: "Luck Rack イオンモール幕張新都心店", time: "Afternoon", details: "Shopping mall", remarks: "", mapLink: ""},
+                        {type: "Go-Kart Harbor Circuit", time: "Night", details: "Go-kart racing", remarks: "", mapLink: ""}
                     ]
                 },
                 {
                     "day": 2, "date": "16/04/2025 (Thurs)", "location": "東京 > 富士 / 御殿場", "mapLink": "https://maps.google.com/maps?q=Fuji+Speedway",
+                    "accommodation": {name: "Fuji Hotel", location: "Gotemba"},
                     "breakfast": [
                         {name: "Hotel Breakfast", mapLink: ""},
                         {name: "Convenience Store", mapLink: ""}
@@ -781,16 +821,17 @@
                         {name: "Yakiniku Restaurant", mapLink: ""}
                     ],
                     "activities": [
-                        {type: "Morning", details: "埼玉 鉄道博物館", mapLink: ""},
-                        {type: "Activity", details: "GENERAL STORE RAILYARD 大宮", mapLink: ""},
-                        {type: "Activity", details: "埼玉 > 富士 (2hrs)", mapLink: ""},
-                        {type: "Afternoon", details: "RECAMP 富士スピードウェイ", mapLink: ""},
-                        {type: "Activity", details: "Fuji Motor Sports Museum", mapLink: ""},
-                        {type: "Activity", details: "御殿場 Outlet", mapLink: ""}
+                        {type: "埼玉 鉄道博物館", time: "Morning", details: "Railway museum", remarks: "", mapLink: ""},
+                        {type: "GENERAL STORE RAILYARD 大宮", time: "Morning", details: "Train store", remarks: "", mapLink: ""},
+                        {type: "Drive to Fuji", time: "Afternoon", details: "2 hours drive", remarks: "", mapLink: ""},
+                        {type: "RECAMP 富士スピードウェイ", time: "Afternoon", details: "Fuji Speedway", remarks: "", mapLink: ""},
+                        {type: "Fuji Motor Sports Museum", time: "Afternoon", details: "Car museum", remarks: "", mapLink: ""},
+                        {type: "御殿場 Outlet", time: "Afternoon", details: "Shopping", remarks: "", mapLink: ""}
                     ]
                 },
                 {
                     "day": 3, "date": "17/04/2025 (Fri)", "location": "富士 > 箱根 > 伊豆", "mapLink": "https://maps.google.com/maps?q=Hakone",
+                    "accommodation": {name: "Izu Onsen Hotel", location: "Izu"},
                     "breakfast": [
                         {name: "Cook", mapLink: ""},
                         {name: "Breakfast Set", mapLink: ""}
@@ -804,16 +845,17 @@
                         {name: "Hot Pot", mapLink: ""}
                     ],
                     "activities": [
-                        {type: "Morning", details: "Fuji Speedway", mapLink: ""},
-                        {type: "Activity", details: "棠陽神社", mapLink: ""},
-                        {type: "Activity", details: "富士 > 長尾峠 > 箱根", mapLink: ""},
-                        {type: "Afternoon", details: "箱根神社 & 大観山展望台", mapLink: ""},
-                        {type: "Activity", details: "芦ノ湖Skyline", mapLink: ""},
-                        {type: "Night", details: "箱根 > 伊豆", mapLink: ""}
+                        {type: "Fuji Speedway", time: "Morning", details: "Racing circuit", remarks: "", mapLink: ""},
+                        {type: "棠陽神社", time: "Morning", details: "Shrine visit", remarks: "", mapLink: ""},
+                        {type: "富士 > 長尾峠 > 箱根", time: "Afternoon", details: "Scenic drive", remarks: "", mapLink: ""},
+                        {type: "箱根神社 & 大観山展望台", time: "Afternoon", details: "Shrine and viewpoint", remarks: "", mapLink: ""},
+                        {type: "芦ノ湖Skyline", time: "Afternoon", details: "Lake scenic route", remarks: "", mapLink: ""},
+                        {type: "Drive to Izu", time: "Night", details: "Evening drive", remarks: "", mapLink: ""}
                     ]
                 },
                 {
                     "day": 4, "date": "18/04/2025 (Sat)", "location": "伊豆 > 東京", "mapLink": "https://maps.google.com/maps?q=Izu+Shizuoka",
+                    "accommodation": {name: "Yokohama Hotel", location: "Yokohama"},
                     "breakfast": [
                         {name: "朝食", mapLink: ""},
                         {name: "Breakfast Buffet", mapLink: ""}
@@ -827,16 +869,17 @@
                         {name: "横浜 Ramen", mapLink: ""}
                     ],
                     "activities": [
-                        {type: "Morning", details: "大室山登山リフト", mapLink: ""},
-                        {type: "Activity", details: "伊豆シャボテン動物公園", mapLink: ""},
-                        {type: "Activity", details: "小室山リッジウォーク", mapLink: ""},
-                        {type: "Activity", details: "伊豆 > 横浜", mapLink: ""},
-                        {type: "Activity", details: "新江ノ島水族館", mapLink: ""},
-                        {type: "Night", details: "Stay in 横浜", mapLink: ""}
+                        {type: "大室山登山リフト", time: "Morning", details: "Mountain lift", remarks: "", mapLink: ""},
+                        {type: "伊豆シャボテン動物公園", time: "Morning", details: "Zoo and botanical garden", remarks: "", mapLink: ""},
+                        {type: "小室山リッジウォーク", time: "Afternoon", details: "Ridge walk", remarks: "", mapLink: ""},
+                        {type: "Drive to Yokohama", time: "Afternoon", details: "Travel to coast", remarks: "", mapLink: ""},
+                        {type: "新江ノ島水族館", time: "Afternoon", details: "Aquarium", remarks: "", mapLink: ""},
+                        {type: "Stay in Yokohama", time: "Night", details: "Overnight", remarks: "", mapLink: ""}
                     ]
                 },
                 {
                     "day": 5, "date": "19/04/2025 (Sun)", "location": "東京 > 秋名 > 東京", "mapLink": "https://maps.google.com/maps?q=Haruna+Mountain",
+                    "accommodation": {name: "Tokyo Hotel", location: "Shinjuku"},
                     "breakfast": [
                         {name: "Early Breakfast", mapLink: ""},
                         {name: "Convenience Store", mapLink: ""}
@@ -850,17 +893,17 @@
                         {name: "Sukiyaki", mapLink: ""}
                     ],
                     "activities": [
-                        {type: "Morning", details: "JDM Car Rental", mapLink: ""},
-                        {type: "Activity", details: "おもしろレンタカー 野田本店", mapLink: ""},
-                        {type: "Activity", details: "埼玉 > 群馬", mapLink: ""},
-                        {type: "Activity", details: "榛名山 ヤセオネ峠", mapLink: ""},
-                        {type: "Activity", details: "群馬 > 東京", mapLink: ""},
-                        {type: "Activity", details: "Return JDM Car", mapLink: ""},
-                        {type: "Night", details: "東京 > 埼玉", mapLink: ""}
+                        {type: "JDM Car Rental", time: "Morning", details: "Pick up rental car", remarks: "", mapLink: ""},
+                        {type: "おもしろレンタカー 野田本店", time: "Morning", details: "Rental shop", remarks: "", mapLink: ""},
+                        {type: "Drive to Gunma", time: "Afternoon", details: "Head to mountains", remarks: "", mapLink: ""},
+                        {type: "榛名山 ヤセオネ峠", time: "Afternoon", details: "Mountain pass driving", remarks: "", mapLink: ""},
+                        {type: "Return to Tokyo", time: "Afternoon", details: "Drive back", remarks: "", mapLink: ""},
+                        {type: "Return JDM Car", time: "Night", details: "Return rental", remarks: "", mapLink: ""}
                     ]
                 },
                 {
                     "day": 6, "date": "20/04/2025 (Mon)", "location": "東京", "mapLink": "https://maps.google.com/maps?q=Toyosu+Tokyo",
+                    "accommodation": {name: "Airport Hotel", location: "Narita"},
                     "breakfast": [
                         {name: "豊洲市場", mapLink: ""},
                         {name: "Sushi Breakfast", mapLink: ""}
@@ -874,11 +917,11 @@
                         {name: "Izakaya", mapLink: ""}
                     ],
                     "activities": [
-                        {type: "Breakfast", details: "豊洲市場", mapLink: ""},
-                        {type: "Activity", details: "Urban Dock LaLaport Toyosu", mapLink: ""},
-                        {type: "Afternoon", details: "Back to Hong Kong & Return Car", mapLink: ""},
-                        {type: "Activity", details: "SMALL WORLDS Miniature Museum", mapLink: ""},
-                        {type: "Activity", details: "Tokyo Joypolis", mapLink: ""}
+                        {type: "豊洲市場", time: "Morning", details: "Fish market", remarks: "", mapLink: ""},
+                        {type: "Urban Dock LaLaport Toyosu", time: "Morning", details: "Shopping mall", remarks: "", mapLink: ""},
+                        {type: "Return to Airport", time: "Afternoon", details: "Head to airport", remarks: "", mapLink: ""},
+                        {type: "SMALL WORLDS Miniature Museum", time: "Afternoon", details: "Museum", remarks: "", mapLink: ""},
+                        {type: "Tokyo Joypolis", time: "Afternoon", details: "Theme park", remarks: "", mapLink: ""}
                     ]
                 }
             ]
@@ -944,6 +987,14 @@
                     <div class="location">📍 ${day.location}</div>
                     <div class="activity-count">${day.activities.length} activities + meals</div>
                     <div class="day-details" id="details-${idx}">
+                        <div class="accommodation-section">
+                            <h4>🏨 Accommodation</h4>
+                            <div class="accommodation-info">
+                                <strong>${day.accommodation.name}</strong><br>
+                                📍 ${day.accommodation.location}
+                            </div>
+                        </div>
+
                         <div class="meal-section">
                             <h4>🍳 Breakfast Options</h4>
                             ${day.breakfast.map((meal, mIdx) => `
@@ -993,8 +1044,12 @@
                             <h4 style="margin-bottom: 12px;">🎯 Activities</h4>
                             ${day.activities.map((act, actIdx) => `
                                 <div class="activity">
-                                    <div class="activity-type">🔹 ${act.type}</div>
+                                    <div class="activity-header">
+                                        <div class="activity-type">${act.type}</div>
+                                        <div class="activity-time">${act.time}</div>
+                                    </div>
                                     <div class="activity-details">${act.details}</div>
+                                    ${act.remarks ? `<div class="activity-remarks">📝 ${act.remarks}</div>` : ''}
                                     ${act.mapLink ? `<div class="activity-maps"><a href="${act.mapLink}" target="_blank">📍 View on Google Maps</a></div>` : ''}
                                 </div>
                             `).join('')}
@@ -1024,6 +1079,19 @@
                     <label>Location</label>
                     <input type="text" id="editLocation" value="${day.location}">
                 </div>
+
+                <div style="margin-top: 20px; margin-bottom: 20px; padding: 15px; background: #fff3cd; border-radius: 8px;">
+                    <h4 style="margin-bottom: 15px; color: #333;">🏨 Accommodation</h4>
+                    <div class="form-group">
+                        <label>Hotel/Accommodation Name</label>
+                        <input type="text" id="editAccomName" value="${day.accommodation.name}">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="editAccomLocation" value="${day.accommodation.location}">
+                    </div>
+                </div>
+
                 <div style="margin-top: 20px; margin-bottom: 20px;">
                     <h4 style="margin-bottom: 15px;">Breakfast Options</h4>
                     ${day.breakfast.map((meal, mIdx) => `
@@ -1065,12 +1133,24 @@
                     ${day.activities.map((act, actIdx) => `
                         <div style="margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
                             <div class="form-group">
-                                <label>Type</label>
+                                <label>Activity Name</label>
                                 <input type="text" value="${act.type}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].type = this.value">
+                            </div>
+                            <div class="form-group">
+                                <label>Time</label>
+                                <select onchange="tripData.itinerary[${idx}].activities[${actIdx}].time = this.value">
+                                    <option value="Morning" ${act.time === 'Morning' ? 'selected' : ''}>Morning</option>
+                                    <option value="Afternoon" ${act.time === 'Afternoon' ? 'selected' : ''}>Afternoon</option>
+                                    <option value="Night" ${act.time === 'Night' ? 'selected' : ''}>Night</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Details</label>
                                 <input type="text" value="${act.details}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].details = this.value">
+                            </div>
+                            <div class="form-group">
+                                <label>Remarks</label>
+                                <input type="text" value="${act.remarks || ''}" placeholder="Add notes about this activity" onchange="tripData.itinerary[${idx}].activities[${actIdx}].remarks = this.value">
                             </div>
                             <div class="form-group">
                                 <label>Google Maps Link (Optional)</label>
@@ -1087,13 +1167,15 @@
         }
 
         function addActivityToDay(idx) {
-            tripData.itinerary[idx].activities.push({type: "New Activity", details: "", mapLink: ""});
+            tripData.itinerary[idx].activities.push({type: "New Activity", time: "Morning", details: "", remarks: "", mapLink: ""});
             openEditDayModal(idx);
         }
 
         function saveDayEdits() {
             const idx = currentEditingDay;
             tripData.itinerary[idx].location = document.getElementById('editLocation').value;
+            tripData.itinerary[idx].accommodation.name = document.getElementById('editAccomName').value;
+            tripData.itinerary[idx].accommodation.location = document.getElementById('editAccomLocation').value;
             
             localStorage.setItem('tripData', JSON.stringify(tripData));
             closeModal('editDayModal');
