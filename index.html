@@ -239,6 +239,45 @@
             display: block;
         }
 
+        .meal-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .meal-section h4 {
+            font-size: 1.1em;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .meal-option {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .meal-option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .meal-option label {
+            flex: 1;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .meal-option .details {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
         .activity {
             margin-bottom: 16px;
             padding: 12px;
@@ -702,12 +741,146 @@
             "end_date": "20/04/2025",
             "duration_days": 6,
             "itinerary": [
-                {"day": 1, "date": "15/04/2025 (Wed)", "location": "東京", "mapLink": "https://maps.google.com/maps?q=Tokyo", "activities": [{"type": "Breakfast", "details": "ブリコラージュ ブレッド アンド カンパニー", "mapLink": ""}, {"type": "Morning", "details": "アルペントーキョー [Alpen TOKYO]", "mapLink": "https://maps.google.com/maps?q=Alpen+Tokyo"}, {"type": "Activity", "details": "模型車店 ミニカーショップ ケンボックス", "mapLink": ""}, {"type": "Activity", "details": "新宿 北村写真機店", "mapLink": ""}, {"type": "Lunch", "details": "Ramen Afro Beats / 麺屋海神", "mapLink": ""}, {"type": "Afternoon", "details": "Arrives in Tokyo & Car Rental", "mapLink": ""}, {"type": "Activity", "details": "Tomica Shop", "mapLink": ""}, {"type": "Activity", "details": "Luck Rack イオンモール幕張新都心店", "mapLink": ""}, {"type": "Activity", "details": "Go-Kart Harbor Circuit", "mapLink": ""}, {"type": "Dinner", "details": "最上階 夜景 居酒屋 空海", "mapLink": ""}, {"type": "Night", "details": "Stay near JDM area", "mapLink": ""}]},
-                {"day": 2, "date": "16/04/2025 (Thurs)", "location": "東京 > 富士 / 御殿場", "mapLink": "https://maps.google.com/maps?q=Fuji+Speedway", "activities": [{"type": "Morning", "details": "埼玉 鉄道博物館", "mapLink": ""}, {"type": "Activity", "details": "GENERAL STORE RAILYARD 大宮", "mapLink": ""}, {"type": "Activity", "details": "埼玉 > 富士 (2hrs)", "mapLink": ""}, {"type": "Lunch", "details": "THE OUTLETS SHONAN HIRATSUKA", "mapLink": ""}, {"type": "Afternoon", "details": "RECAMP 富士スピードウェイ", "mapLink": ""}, {"type": "Activity", "details": "Fuji Motor Sports Museum", "mapLink": ""}, {"type": "Activity", "details": "御殿場 Outlet", "mapLink": ""}, {"type": "Dinner", "details": "BBQ", "mapLink": ""}]},
-                {"day": 3, "date": "17/04/2025 (Fri)", "location": "富士 > 箱根 > 伊豆", "mapLink": "https://maps.google.com/maps?q=Hakone", "activities": [{"type": "Breakfast", "details": "Cook", "mapLink": ""}, {"type": "Morning", "details": "Fuji Speedway", "mapLink": ""}, {"type": "Activity", "details": "棠陽神社", "mapLink": ""}, {"type": "Activity", "details": "富士 > 長尾峠 > 箱根", "mapLink": ""}, {"type": "Lunch", "details": "銀の穂 / cafe KOMON", "mapLink": ""}, {"type": "Afternoon", "details": "箱根神社 & 大観山展望台", "mapLink": ""}, {"type": "Activity", "details": "芦ノ湖Skyline", "mapLink": ""}, {"type": "Dinner", "details": "和食かっぽれ", "mapLink": ""}, {"type": "Night", "details": "箱根 > 伊豆", "mapLink": ""}]},
-                {"day": 4, "date": "18/04/2025 (Sat)", "location": "伊豆 > 東京", "mapLink": "https://maps.google.com/maps?q=Izu+Shizuoka", "activities": [{"type": "Breakfast", "details": "朝食", "mapLink": ""}, {"type": "Morning", "details": "大室山登山リフト", "mapLink": ""}, {"type": "Activity", "details": "伊豆シャボテン動物公園", "mapLink": ""}, {"type": "Activity", "details": "小室山リッジウォーク", "mapLink": ""}, {"type": "Lunch", "details": "こうげん寿し / 磯料理", "mapLink": ""}, {"type": "Activity", "details": "伊豆 > 横浜", "mapLink": ""}, {"type": "Activity", "details": "新江ノ島水族館", "mapLink": ""}, {"type": "Dinner", "details": "江ノ島 / 横浜", "mapLink": ""}, {"type": "Night", "details": "Stay in 横浜", "mapLink": ""}]},
-                {"day": 5, "date": "19/04/2025 (Sun)", "location": "東京 > 秋名 > 東京", "mapLink": "https://maps.google.com/maps?q=Haruna+Mountain", "activities": [{"type": "Morning", "details": "JDM Car Rental", "mapLink": ""}, {"type": "Activity", "details": "おもしろレンタカー 野田本店", "mapLink": ""}, {"type": "Activity", "details": "埼玉 > 群馬", "mapLink": ""}, {"type": "Activity", "details": "榛名山 ヤセオネ峠", "mapLink": ""}, {"type": "Activity", "details": "群馬 > 東京", "mapLink": ""}, {"type": "Activity", "details": "Return JDM Car", "mapLink": ""}, {"type": "Dinner", "details": "Hot Pot", "mapLink": ""}, {"type": "Night", "details": "東京 > 埼玉", "mapLink": ""}]},
-                {"day": 6, "date": "20/04/2025 (Mon)", "location": "東京", "mapLink": "https://maps.google.com/maps?q=Toyosu+Tokyo", "activities": [{"type": "Breakfast", "details": "豊洲市場", "mapLink": ""}, {"type": "Activity", "details": "Urban Dock LaLaport Toyosu", "mapLink": ""}, {"type": "Lunch", "details": "WE ARE THE FARM 豊洲", "mapLink": ""}, {"type": "Afternoon", "details": "Back to Hong Kong & Return Car", "mapLink": ""}, {"type": "Activity", "details": "SMALL WORLDS Miniature Museum", "mapLink": ""}, {"type": "Activity", "details": "Tokyo Joypolis", "mapLink": ""}]}
+                {
+                    "day": 1, "date": "15/04/2025 (Wed)", "location": "東京", "mapLink": "https://maps.google.com/maps?q=Tokyo",
+                    "breakfast": [
+                        {name: "ブリコラージュ ブレッド アンド カンパニー", mapLink: ""},
+                        {name: "Starbucks Shinjuku", mapLink: "https://maps.google.com/maps?q=Starbucks+Shinjuku"}
+                    ],
+                    "lunch": [
+                        {name: "Ramen Afro Beats", mapLink: ""},
+                        {name: "麺屋海神", mapLink: ""}
+                    ],
+                    "dinner": [
+                        {name: "最上階 夜景 居酒屋 空海", mapLink: ""},
+                        {name: "Izakaya Shinjuku", mapLink: ""}
+                    ],
+                    "activities": [
+                        {type: "Morning", details: "アルペントーキョー [Alpen TOKYO]", mapLink: "https://maps.google.com/maps?q=Alpen+Tokyo"},
+                        {type: "Activity", details: "模型車店 ミニカーショップ ケンボックス", mapLink: ""},
+                        {type: "Activity", details: "新宿 北村写真機店", mapLink: ""},
+                        {type: "Afternoon", details: "Arrives in Tokyo & Car Rental", mapLink: ""},
+                        {type: "Activity", details: "Tomica Shop", mapLink: ""},
+                        {type: "Activity", details: "Luck Rack イオンモール幕張新都心店", mapLink: ""},
+                        {type: "Activity", details: "Go-Kart Harbor Circuit", mapLink: ""},
+                        {type: "Night", details: "Stay near JDM area", mapLink: ""}
+                    ]
+                },
+                {
+                    "day": 2, "date": "16/04/2025 (Thurs)", "location": "東京 > 富士 / 御殿場", "mapLink": "https://maps.google.com/maps?q=Fuji+Speedway",
+                    "breakfast": [
+                        {name: "Hotel Breakfast", mapLink: ""},
+                        {name: "Convenience Store", mapLink: ""}
+                    ],
+                    "lunch": [
+                        {name: "THE OUTLETS SHONAN HIRATSUKA", mapLink: ""},
+                        {name: "Local Ramen", mapLink: ""}
+                    ],
+                    "dinner": [
+                        {name: "BBQ", mapLink: ""},
+                        {name: "Yakiniku Restaurant", mapLink: ""}
+                    ],
+                    "activities": [
+                        {type: "Morning", details: "埼玉 鉄道博物館", mapLink: ""},
+                        {type: "Activity", details: "GENERAL STORE RAILYARD 大宮", mapLink: ""},
+                        {type: "Activity", details: "埼玉 > 富士 (2hrs)", mapLink: ""},
+                        {type: "Afternoon", details: "RECAMP 富士スピードウェイ", mapLink: ""},
+                        {type: "Activity", details: "Fuji Motor Sports Museum", mapLink: ""},
+                        {type: "Activity", details: "御殿場 Outlet", mapLink: ""}
+                    ]
+                },
+                {
+                    "day": 3, "date": "17/04/2025 (Fri)", "location": "富士 > 箱根 > 伊豆", "mapLink": "https://maps.google.com/maps?q=Hakone",
+                    "breakfast": [
+                        {name: "Cook", mapLink: ""},
+                        {name: "Breakfast Set", mapLink: ""}
+                    ],
+                    "lunch": [
+                        {name: "銀の穂", mapLink: ""},
+                        {name: "cafe KOMON", mapLink: ""}
+                    ],
+                    "dinner": [
+                        {name: "和食かっぽれ", mapLink: ""},
+                        {name: "Hot Pot", mapLink: ""}
+                    ],
+                    "activities": [
+                        {type: "Morning", details: "Fuji Speedway", mapLink: ""},
+                        {type: "Activity", details: "棠陽神社", mapLink: ""},
+                        {type: "Activity", details: "富士 > 長尾峠 > 箱根", mapLink: ""},
+                        {type: "Afternoon", details: "箱根神社 & 大観山展望台", mapLink: ""},
+                        {type: "Activity", details: "芦ノ湖Skyline", mapLink: ""},
+                        {type: "Night", details: "箱根 > 伊豆", mapLink: ""}
+                    ]
+                },
+                {
+                    "day": 4, "date": "18/04/2025 (Sat)", "location": "伊豆 > 東京", "mapLink": "https://maps.google.com/maps?q=Izu+Shizuoka",
+                    "breakfast": [
+                        {name: "朝食", mapLink: ""},
+                        {name: "Breakfast Buffet", mapLink: ""}
+                    ],
+                    "lunch": [
+                        {name: "こうげん寿し", mapLink: ""},
+                        {name: "磯料理", mapLink: ""}
+                    ],
+                    "dinner": [
+                        {name: "江ノ島 Seafood", mapLink: ""},
+                        {name: "横浜 Ramen", mapLink: ""}
+                    ],
+                    "activities": [
+                        {type: "Morning", details: "大室山登山リフト", mapLink: ""},
+                        {type: "Activity", details: "伊豆シャボテン動物公園", mapLink: ""},
+                        {type: "Activity", details: "小室山リッジウォーク", mapLink: ""},
+                        {type: "Activity", details: "伊豆 > 横浜", mapLink: ""},
+                        {type: "Activity", details: "新江ノ島水族館", mapLink: ""},
+                        {type: "Night", details: "Stay in 横浜", mapLink: ""}
+                    ]
+                },
+                {
+                    "day": 5, "date": "19/04/2025 (Sun)", "location": "東京 > 秋名 > 東京", "mapLink": "https://maps.google.com/maps?q=Haruna+Mountain",
+                    "breakfast": [
+                        {name: "Early Breakfast", mapLink: ""},
+                        {name: "Convenience Store", mapLink: ""}
+                    ],
+                    "lunch": [
+                        {name: "Mountain Lunch", mapLink: ""},
+                        {name: "Local Restaurant", mapLink: ""}
+                    ],
+                    "dinner": [
+                        {name: "Hot Pot", mapLink: ""},
+                        {name: "Sukiyaki", mapLink: ""}
+                    ],
+                    "activities": [
+                        {type: "Morning", details: "JDM Car Rental", mapLink: ""},
+                        {type: "Activity", details: "おもしろレンタカー 野田本店", mapLink: ""},
+                        {type: "Activity", details: "埼玉 > 群馬", mapLink: ""},
+                        {type: "Activity", details: "榛名山 ヤセオネ峠", mapLink: ""},
+                        {type: "Activity", details: "群馬 > 東京", mapLink: ""},
+                        {type: "Activity", details: "Return JDM Car", mapLink: ""},
+                        {type: "Night", details: "東京 > 埼玉", mapLink: ""}
+                    ]
+                },
+                {
+                    "day": 6, "date": "20/04/2025 (Mon)", "location": "東京", "mapLink": "https://maps.google.com/maps?q=Toyosu+Tokyo",
+                    "breakfast": [
+                        {name: "豊洲市場", mapLink: ""},
+                        {name: "Sushi Breakfast", mapLink: ""}
+                    ],
+                    "lunch": [
+                        {name: "WE ARE THE FARM 豊洲", mapLink: ""},
+                        {name: "Ramen", mapLink: ""}
+                    ],
+                    "dinner": [
+                        {name: "Airport Dinner", mapLink: ""},
+                        {name: "Izakaya", mapLink: ""}
+                    ],
+                    "activities": [
+                        {type: "Breakfast", details: "豊洲市場", mapLink: ""},
+                        {type: "Activity", details: "Urban Dock LaLaport Toyosu", mapLink: ""},
+                        {type: "Afternoon", details: "Back to Hong Kong & Return Car", mapLink: ""},
+                        {type: "Activity", details: "SMALL WORLDS Miniature Museum", mapLink: ""},
+                        {type: "Activity", details: "Tokyo Joypolis", mapLink: ""}
+                    ]
+                }
             ]
         };
 
@@ -727,6 +900,7 @@
         let persons = JSON.parse(localStorage.getItem('persons')) || ["Person 1", "Person 2", "Person 3"];
         let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
         let currentEditingDay = null;
+        let selectedMeals = JSON.parse(localStorage.getItem('selectedMeals')) || {};
 
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -746,7 +920,6 @@
             const expenseCount = expenses.length;
             const avgPerPerson = persons.length > 0 ? totalExpenses / persons.length : 0;
             
-            // Find highest category
             const categoryTotals = {};
             expenses.forEach(e => {
                 categoryTotals[e.category] = (categoryTotals[e.category] || 0) + e.amount;
@@ -769,18 +942,71 @@
                     <h3>Day ${day.day}</h3>
                     <div class="date">${day.date}</div>
                     <div class="location">📍 ${day.location}</div>
-                    <div class="activity-count">${day.activities.length} activities</div>
+                    <div class="activity-count">${day.activities.length} activities + meals</div>
                     <div class="day-details" id="details-${idx}">
-                        ${day.activities.map((act, actIdx) => `
-                            <div class="activity">
-                                <div class="activity-type">🔹 ${act.type}</div>
-                                <div class="activity-details">${act.details}</div>
-                                ${act.mapLink ? `<div class="activity-maps"><a href="${act.mapLink}" target="_blank">📍 View on Google Maps</a></div>` : ''}
-                            </div>
-                        `).join('')}
+                        <div class="meal-section">
+                            <h4>🍳 Breakfast Options</h4>
+                            ${day.breakfast.map((meal, mIdx) => `
+                                <div class="meal-option">
+                                    <input type="radio" id="breakfast_${idx}_${mIdx}" name="breakfast_${idx}" value="${meal.name}" 
+                                        ${selectedMeals[`breakfast_${idx}`] === meal.name ? 'checked' : ''}
+                                        onchange="saveMealSelection('breakfast_${idx}', '${meal.name}')">
+                                    <label for="breakfast_${idx}_${mIdx}">
+                                        <strong>${meal.name}</strong>
+                                        ${meal.mapLink ? `<a href="${meal.mapLink}" target="_blank" style="margin-left: 10px; color: white;">📍</a>` : ''}
+                                    </label>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="meal-section">
+                            <h4>🍜 Lunch Options</h4>
+                            ${day.lunch.map((meal, mIdx) => `
+                                <div class="meal-option">
+                                    <input type="radio" id="lunch_${idx}_${mIdx}" name="lunch_${idx}" value="${meal.name}"
+                                        ${selectedMeals[`lunch_${idx}`] === meal.name ? 'checked' : ''}
+                                        onchange="saveMealSelection('lunch_${idx}', '${meal.name}')">
+                                    <label for="lunch_${idx}_${mIdx}">
+                                        <strong>${meal.name}</strong>
+                                        ${meal.mapLink ? `<a href="${meal.mapLink}" target="_blank" style="margin-left: 10px; color: white;">📍</a>` : ''}
+                                    </label>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="meal-section">
+                            <h4>🍽️ Dinner Options</h4>
+                            ${day.dinner.map((meal, mIdx) => `
+                                <div class="meal-option">
+                                    <input type="radio" id="dinner_${idx}_${mIdx}" name="dinner_${idx}" value="${meal.name}"
+                                        ${selectedMeals[`dinner_${idx}`] === meal.name ? 'checked' : ''}
+                                        onchange="saveMealSelection('dinner_${idx}', '${meal.name}')">
+                                    <label for="dinner_${idx}_${mIdx}">
+                                        <strong>${meal.name}</strong>
+                                        ${meal.mapLink ? `<a href="${meal.mapLink}" target="_blank" style="margin-left: 10px; color: white;">📍</a>` : ''}
+                                    </label>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div style="margin-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.3); padding-top: 20px;">
+                            <h4 style="margin-bottom: 12px;">🎯 Activities</h4>
+                            ${day.activities.map((act, actIdx) => `
+                                <div class="activity">
+                                    <div class="activity-type">🔹 ${act.type}</div>
+                                    <div class="activity-details">${act.details}</div>
+                                    ${act.mapLink ? `<div class="activity-maps"><a href="${act.mapLink}" target="_blank">📍 View on Google Maps</a></div>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
                     </div>
                 </div>
             `).join('');
+        }
+
+        function saveMealSelection(mealType, mealName) {
+            selectedMeals[mealType] = mealName;
+            localStorage.setItem('selectedMeals', JSON.stringify(selectedMeals));
         }
 
         function toggleDayDetails(idx) {
@@ -798,6 +1024,42 @@
                     <label>Location</label>
                     <input type="text" id="editLocation" value="${day.location}">
                 </div>
+                <div style="margin-top: 20px; margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 15px;">Breakfast Options</h4>
+                    ${day.breakfast.map((meal, mIdx) => `
+                        <div style="margin-bottom: 10px; display: flex; gap: 10px;">
+                            <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].breakfast[${mIdx}].name = this.value">
+                            <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].breakfast[${mIdx}].mapLink = this.value">
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].breakfast.splice(${mIdx}, 1); openEditDayModal(${idx});">Delete</button>
+                        </div>
+                    `).join('')}
+                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].breakfast.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ Add Breakfast</button>
+                </div>
+
+                <div style="margin-top: 20px; margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 15px;">Lunch Options</h4>
+                    ${day.lunch.map((meal, mIdx) => `
+                        <div style="margin-bottom: 10px; display: flex; gap: 10px;">
+                            <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].lunch[${mIdx}].name = this.value">
+                            <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].lunch[${mIdx}].mapLink = this.value">
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].lunch.splice(${mIdx}, 1); openEditDayModal(${idx});">Delete</button>
+                        </div>
+                    `).join('')}
+                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].lunch.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ Add Lunch</button>
+                </div>
+
+                <div style="margin-top: 20px; margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 15px;">Dinner Options</h4>
+                    ${day.dinner.map((meal, mIdx) => `
+                        <div style="margin-bottom: 10px; display: flex; gap: 10px;">
+                            <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].dinner[${mIdx}].name = this.value">
+                            <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].dinner[${mIdx}].mapLink = this.value">
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].dinner.splice(${mIdx}, 1); openEditDayModal(${idx});">Delete</button>
+                        </div>
+                    `).join('')}
+                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].dinner.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ Add Dinner</button>
+                </div>
+
                 <div style="margin-top: 20px; margin-bottom: 20px;">
                     <h4 style="margin-bottom: 15px;">Activities</h4>
                     ${day.activities.map((act, actIdx) => `
@@ -861,7 +1123,6 @@
                 </span>
             `).join('');
             
-            // Update payer dropdown
             const select = document.getElementById('expensePaidBy');
             select.innerHTML = persons.map(p => `<option value="${p}">${p}</option>`).join('');
         }
@@ -1135,7 +1396,6 @@
             document.getElementById(modalId).classList.remove('show');
         }
 
-        // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             renderItinerary();
             renderRecommendations();
