@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tokyo Trip 2025 - Interactive Itinerary</title>
+    <title>Tokyo Trip 2026 - Travel Planner</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
@@ -13,148 +13,191 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #1a1a1a;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
+        /* Header */
         header {
-            background: white;
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            background: #000;
+            color: #fff;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 100%;
+            background: linear-gradient(135deg, #2a2a2a 0%, #000 100%);
+            clip-path: polygon(100% 0, 0 0, 100% 100%);
+        }
+
+        header .content {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         header h1 {
-            font-size: 3em;
-            color: #333;
-            margin-bottom: 10px;
+            font-size: 3.5em;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
         header .subtitle {
-            font-size: 1.2em;
-            color: #666;
-            margin-bottom: 20px;
+            font-size: 1.1em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #ccc;
+            margin-bottom: 40px;
         }
 
         header .trip-info {
             display: flex;
-            justify-content: center;
-            gap: 40px;
+            gap: 60px;
             flex-wrap: wrap;
-            margin-top: 20px;
         }
 
         header .info-item {
-            text-align: center;
+            position: relative;
+            padding-left: 0;
         }
 
         header .info-item .label {
-            font-size: 0.9em;
-            color: #999;
+            font-size: 0.75em;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 3px;
+            color: #999;
+            margin-bottom: 8px;
         }
 
         header .info-item .value {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #667eea;
-            margin-top: 5px;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #fff;
         }
 
+        /* Expense Summary */
         .expense-summary {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            padding: 50px 40px;
+            margin: -40px 20px 40px;
+            position: relative;
+            z-index: 10;
+            border-left: 8px solid #000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         .expense-summary h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 1.5em;
+            font-size: 1.3em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            color: #000;
         }
 
         .expense-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
-            margin-bottom: 20px;
         }
 
         .expense-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
+            background: #f9f9f9;
+            padding: 25px;
+            border: 1px solid #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expense-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #000;
         }
 
         .expense-card .label {
-            font-size: 0.9em;
-            opacity: 0.9;
-            margin-bottom: 8px;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            margin-bottom: 12px;
         }
 
         .expense-card .value {
-            font-size: 2em;
-            font-weight: bold;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #000;
         }
 
+        /* Tabs */
         .tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
+            gap: 0;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e0e0e0;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .tab-btn {
-            background: white;
-            border: 2px solid #ddd;
-            padding: 12px 24px;
-            border-radius: 8px;
+            background: transparent;
+            border: none;
+            padding: 20px 30px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 0.95em;
             font-weight: 600;
-            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            position: relative;
+            transition: color 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
         }
 
         .tab-btn:hover {
-            border-color: #667eea;
-            color: #667eea;
+            color: #000;
         }
 
         .tab-btn.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
+            color: #000;
+            border-bottom-color: #000;
         }
 
+        /* Tab Content */
         .tab-content {
             display: none;
-            background: white;
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease;
         }
 
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.3s ease;
         }
 
-        @keyframes fadeIn {
+        @keyframes slideIn {
             from {
                 opacity: 0;
                 transform: translateY(10px);
@@ -165,74 +208,98 @@
             }
         }
 
+        /* Itinerary Grid */
         .itinerary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
         }
 
         .day-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 24px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
+            border: 1px solid #e0e0e0;
             position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .day-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: #000;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
         }
 
         .day-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .day-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .day-card-header {
+            background: #f9f9f9;
+            padding: 25px;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
         }
 
         .day-card h3 {
-            font-size: 1.5em;
+            font-size: 1.4em;
+            font-weight: 700;
             margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .day-card .date {
-            font-size: 0.9em;
-            opacity: 0.9;
+            font-size: 0.85em;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 12px;
         }
 
         .day-card .location {
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: 600;
-            margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .day-card .activity-count {
-            font-size: 0.9em;
-            opacity: 0.8;
+            color: #000;
         }
 
         .day-card .edit-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255, 255, 255, 0.3);
+            top: 20px;
+            right: 20px;
+            background: #000;
             border: none;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
+            color: #fff;
+            padding: 8px 16px;
             cursor: pointer;
-            font-size: 0.9em;
-            transition: background 0.3s ease;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .day-card .edit-btn:hover {
-            background: rgba(255, 255, 255, 0.5);
+            background: #333;
         }
 
         .day-details {
             display: none;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 25px;
+            background: #fff;
         }
 
         .day-details.show {
@@ -240,237 +307,301 @@
         }
 
         .accommodation-section {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            border-left: 4px solid #ffc107;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #000;
         }
 
         .accommodation-section h4 {
-            font-size: 1.1em;
-            margin-bottom: 8px;
-            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #000;
         }
 
         .accommodation-info {
             font-size: 0.95em;
-            line-height: 1.5;
+            color: #333;
+            line-height: 1.6;
         }
 
         .meal-section {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            margin-bottom: 25px;
         }
 
         .meal-section h4 {
-            font-size: 1.1em;
-            margin-bottom: 12px;
-            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #000;
         }
 
         .meal-option {
-            margin-bottom: 10px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 6px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #f9f9f9;
+            border-left: 3px solid #ddd;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .meal-option:hover {
+            border-left-color: #000;
+            background: #f0f0f0;
         }
 
         .meal-option input[type="radio"] {
-            margin-right: 10px;
             cursor: pointer;
+            width: 18px;
+            height: 18px;
         }
 
         .meal-option label {
             flex: 1;
             cursor: pointer;
             margin: 0;
+            font-size: 0.95em;
         }
 
         .meal-option .details {
             font-size: 0.85em;
-            opacity: 0.8;
+            color: #999;
         }
 
         .activity {
-            margin-bottom: 16px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            margin-bottom: 18px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 3px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .activity:hover {
+            border-left-color: #000;
+            background: #f0f0f0;
         }
 
         .activity-header {
             display: flex;
             justify-content: space-between;
-            align-items: start;
+            align-items: flex-start;
             margin-bottom: 8px;
+            gap: 10px;
         }
 
         .activity-type {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95em;
+            color: #000;
         }
 
         .activity-time {
-            font-size: 0.85em;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 4px 8px;
-            border-radius: 4px;
+            font-size: 0.8em;
+            background: #000;
+            color: #fff;
+            padding: 4px 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            white-space: nowrap;
         }
 
         .activity-details {
-            font-size: 0.85em;
-            opacity: 0.9;
-            line-height: 1.4;
+            font-size: 0.9em;
+            color: #666;
             margin-bottom: 6px;
         }
 
         .activity-remarks {
-            font-size: 0.8em;
-            opacity: 0.7;
+            font-size: 0.85em;
+            color: #999;
             font-style: italic;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .activity-maps {
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
         .activity-maps a {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
+            background: #000;
+            color: #fff;
             padding: 6px 12px;
-            border-radius: 6px;
             text-decoration: none;
-            font-size: 0.85em;
-            transition: background 0.3s ease;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
         }
 
         .activity-maps a:hover {
-            background: rgba(255, 255, 255, 0.4);
+            background: #333;
         }
 
+        /* Recommendations */
         .recommendations-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .rec-card {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 12px;
-            border-top: 4px solid #667eea;
-            transition: transform 0.3s ease;
+            background: #fff;
+            padding: 0;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         .rec-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .rec-card-header {
+            background: #f9f9f9;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         .rec-card h4 {
-            color: #333;
-            margin-bottom: 8px;
+            color: #000;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-weight: 700;
         }
 
         .rec-card .category {
             display: inline-block;
-            background: #667eea;
-            color: white;
+            background: #000;
+            color: #fff;
             padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            margin-bottom: 12px;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .rec-card-body {
+            padding: 20px;
         }
 
         .rec-card p {
             color: #666;
-            font-size: 0.9em;
-            line-height: 1.5;
-            margin-bottom: 8px;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 10px;
         }
 
         .rec-card .rating {
-            color: #f39c12;
-            font-weight: 600;
+            color: #000;
+            font-weight: 700;
+            margin-bottom: 15px;
         }
 
         .rec-card a {
-            color: #667eea;
+            color: #000;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #000;
+            transition: all 0.3s ease;
         }
 
         .rec-card a:hover {
-            text-decoration: underline;
+            border-bottom-color: #666;
+            color: #666;
         }
 
+        /* Buttons */
         .btn {
-            background: #667eea;
-            color: white;
+            background: #000;
+            color: #fff;
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+            padding: 12px 24px;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
             margin-right: 10px;
             margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85em;
         }
 
         .btn:hover {
-            background: #764ba2;
+            background: #333;
         }
 
         .btn-secondary {
-            background: #ddd;
-            color: #333;
+            background: #f0f0f0;
+            color: #000;
+            border: 1px solid #ddd;
         }
 
         .btn-secondary:hover {
-            background: #ccc;
+            background: #e0e0e0;
         }
 
         .btn-small {
-            padding: 6px 12px;
-            font-size: 0.85em;
+            padding: 8px 16px;
+            font-size: 0.8em;
             margin: 5px 5px 5px 0;
         }
 
+        /* Forms */
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #333;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
         }
 
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 6px;
+            background: #f9f9f9;
             font-family: inherit;
             font-size: 1em;
+            color: #000;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #000;
+            background: #fff;
         }
 
         .form-group textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
         }
 
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -478,7 +609,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -489,106 +620,131 @@
         }
 
         .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
+            background: #fff;
+            padding: 40px;
             max-width: 600px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
+            position: relative;
         }
 
         .modal-header {
             font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #000;
         }
 
+        /* Expense Item */
         .expense-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border-left: 4px solid #667eea;
+            background: #f9f9f9;
+            padding: 20px;
+            border-left: 4px solid #000;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid #000;
         }
 
         .expense-item h4 {
-            margin-bottom: 8px;
-            color: #333;
+            margin-bottom: 10px;
+            color: #000;
+            font-weight: 700;
         }
 
         .expense-item p {
-            margin: 5px 0;
+            margin: 6px 0;
             color: #666;
-            font-size: 0.9em;
+            font-size: 0.95em;
         }
 
+        /* Split Table */
         .split-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .split-table th,
         .split-table td {
-            padding: 12px;
+            padding: 15px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         .split-table th {
-            background: #f8f9fa;
-            font-weight: 600;
-            color: #333;
+            background: #f0f0f0;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
         }
 
         .split-table tr:hover {
-            background: #f8f9fa;
+            background: #f9f9f9;
         }
 
+        /* Person Tag */
         .person-tag {
             display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
+            background: #000;
+            color: #fff;
+            padding: 8px 16px;
             margin: 5px 5px 5px 0;
             font-size: 0.9em;
+            font-weight: 600;
         }
 
         .person-tag .remove {
-            margin-left: 8px;
+            margin-left: 10px;
             cursor: pointer;
             font-weight: bold;
         }
 
+        /* Footer */
         footer {
             text-align: center;
-            color: white;
-            margin-top: 40px;
-            padding: 20px;
+            color: #999;
+            margin-top: 60px;
+            padding: 40px 20px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 2em;
+                font-size: 2.2em;
             }
 
             header .trip-info {
-                gap: 20px;
+                gap: 30px;
             }
 
             .itinerary-grid {
                 grid-template-columns: 1fr;
             }
 
-            .modal-content {
-                width: 95%;
+            .tabs {
+                justify-content: flex-start;
+                overflow-x: auto;
             }
 
-            .expense-cards {
-                grid-template-columns: 1fr;
+            .tab-btn {
+                padding: 15px 20px;
+                font-size: 0.85em;
+            }
+
+            .expense-summary {
+                margin: -20px 0 30px;
+                padding: 30px;
             }
         }
     </style>
@@ -596,23 +752,25 @@
 <body>
     <div class="container">
         <header>
-            <h1>🗾 Tokyo Trip 2025</h1>
-            <p class="subtitle">Your Complete Travel Itinerary & Planning Guide</p>
-            <div class="trip-info">
-                <div class="info-item">
-                    <div class="label">Duration</div>
-                    <div class="value">6 Days</div>
-                </div>
-                <div class="info-item">
-                    <div class="label">Dates</div>
-                    <div class="value">Apr 15-20, 2025</div>
+            <div class="content">
+                <h1>TOKYO TRIP</h1>
+                <p class="subtitle">2026 TRAVEL PLANNER</p>
+                <div class="trip-info">
+                    <div class="info-item">
+                        <div class="label">Duration</div>
+                        <div class="value">6 Days</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">Dates</div>
+                        <div class="value">Apr 15-20, 2026</div>
+                    </div>
                 </div>
             </div>
         </header>
 
         <!-- Trip Expense Summary -->
         <div class="expense-summary">
-            <h2>💰 Trip Expense Overview</h2>
+            <h2>TRIP EXPENSE OVERVIEW</h2>
             <div class="expense-cards">
                 <div class="expense-card">
                     <div class="label">Total Expenses</div>
@@ -634,61 +792,59 @@
         </div>
 
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('itinerary')">📅 Itinerary</button>
-            <button class="tab-btn" onclick="switchTab('expenses')">💰 Expenses</button>
-            <button class="tab-btn" onclick="switchTab('recommendations')">⭐ Recommendations</button>
+            <button class="tab-btn active" onclick="switchTab('itinerary')">ITINERARY</button>
+            <button class="tab-btn" onclick="switchTab('expenses')">EXPENSES</button>
+            <button class="tab-btn" onclick="switchTab('recommendations')">RECOMMENDATIONS</button>
         </div>
 
         <!-- Itinerary Tab -->
         <div id="itinerary" class="tab-content active">
-            <h2 style="margin-bottom: 30px; color: #333;">Daily Itinerary</h2>
             <div class="itinerary-grid" id="itineraryGrid"></div>
         </div>
 
         <!-- Expenses Tab -->
         <div id="expenses" class="tab-content">
-            <h2 style="margin-bottom: 30px; color: #333;">Expense Tracker</h2>
-            
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 30px;">
-                <h3 style="margin-bottom: 15px; color: #333;">👥 Trip Members</h3>
-                <div id="personsList" style="margin-bottom: 15px;"></div>
+            <div style="background: #fff; padding: 40px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
+                <h3 style="margin-bottom: 25px; color: #000; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">TRIP MEMBERS</h3>
+                <div id="personsList" style="margin-bottom: 20px;"></div>
                 <div style="display: flex; gap: 10px;">
-                    <input type="text" id="newPersonName" placeholder="Enter person name" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
-                    <button class="btn" onclick="addPerson()">Add Person</button>
+                    <input type="text" id="newPersonName" placeholder="Enter person name" style="flex: 1; padding: 12px; border: 1px solid #ddd; background: #f9f9f9;">
+                    <button class="btn" onclick="addPerson()">ADD</button>
                 </div>
             </div>
 
-            <button class="btn" onclick="openAddExpenseModal()">➕ Add Expense</button>
-            <div id="expensesList"></div>
+            <button class="btn" onclick="openAddExpenseModal()">ADD EXPENSE</button>
+            <div id="expensesList" style="margin-top: 30px;"></div>
             <div id="splitSummary"></div>
         </div>
 
         <!-- Recommendations Tab -->
         <div id="recommendations" class="tab-content">
-            <h2 style="margin-bottom: 30px; color: #333;">Curated Recommendations</h2>
-            <button class="btn" onclick="openAddRecommendationModal()">➕ Add Recommendation</button>
-            <button class="btn btn-secondary" onclick="openEditRecommendationModal()">✏️ Edit Recommendations</button>
+            <div style="margin-bottom: 30px;">
+                <button class="btn" onclick="openAddRecommendationModal()">ADD RECOMMENDATION</button>
+                <button class="btn btn-secondary" onclick="openEditRecommendationModal()">EDIT RECOMMENDATIONS</button>
+            </div>
             <div class="recommendations-grid" id="recommendationsGrid"></div>
         </div>
 
         <footer>
-            <p>Built with ❤️ for your Tokyo adventure | Tokyo Trip App 2025</p>
+            <p>TOKYO TRIP 2026 | TRAVEL PLANNER</p>
         </footer>
     </div>
 
     <!-- Modals -->
     <div id="editDayModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">Edit Day Details</div>
+            <div class="modal-header">EDIT DAY DETAILS</div>
             <div id="editDayForm"></div>
-            <button class="btn" onclick="saveDayEdits()">Save Changes</button>
-            <button class="btn btn-secondary" onclick="closeModal('editDayModal')">Cancel</button>
+            <button class="btn" onclick="saveDayEdits()">SAVE</button>
+            <button class="btn btn-secondary" onclick="closeModal('editDayModal')">CANCEL</button>
         </div>
     </div>
 
     <div id="addExpenseModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">Add Expense</div>
+            <div class="modal-header">ADD EXPENSE</div>
             <div class="form-group">
                 <label>Description</label>
                 <input type="text" id="expenseDesc" placeholder="e.g., Dinner at restaurant">
@@ -721,14 +877,14 @@
                 </select>
             </div>
             <div id="splitOptionsContainer"></div>
-            <button class="btn" onclick="addExpense()">Add Expense</button>
-            <button class="btn btn-secondary" onclick="closeModal('addExpenseModal')">Cancel</button>
+            <button class="btn" onclick="addExpense()">ADD</button>
+            <button class="btn btn-secondary" onclick="closeModal('addExpenseModal')">CANCEL</button>
         </div>
     </div>
 
     <div id="addRecommendationModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">Add Recommendation</div>
+            <div class="modal-header">ADD RECOMMENDATION</div>
             <div class="form-group">
                 <label>Name</label>
                 <input type="text" id="recName" placeholder="Restaurant or attraction name">
@@ -759,17 +915,17 @@
                 <label>Rating (1-5)</label>
                 <input type="number" id="recRating" placeholder="4.5" min="1" max="5" step="0.1">
             </div>
-            <button class="btn" onclick="addRecommendation()">Add Recommendation</button>
-            <button class="btn btn-secondary" onclick="closeModal('addRecommendationModal')">Cancel</button>
+            <button class="btn" onclick="addRecommendation()">ADD</button>
+            <button class="btn btn-secondary" onclick="closeModal('addRecommendationModal')">CANCEL</button>
         </div>
     </div>
 
     <div id="editRecommendationModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">Edit Recommendations</div>
+            <div class="modal-header">EDIT RECOMMENDATIONS</div>
             <div id="editRecommendationForm"></div>
-            <button class="btn" onclick="saveRecommendations()">Save Changes</button>
-            <button class="btn btn-secondary" onclick="closeModal('editRecommendationModal')">Cancel</button>
+            <button class="btn" onclick="saveRecommendations()">SAVE</button>
+            <button class="btn btn-secondary" onclick="closeModal('editRecommendationModal')">CANCEL</button>
         </div>
     </div>
 
@@ -781,431 +937,99 @@
             "end_date": "20/04/2026 (Mon)",
             "duration_days": 6,
             "itinerary": [
-                        {
-                                    "day": 1,
-                                    "date": "15/04/2026 (Wed)",
-                                    "location": "東京",
-                                    "mapLink": "https://maps.google.com",
-                                    "accommodation": {
-                                                "name": "Hotel",
-                                                "location": "TBD"
-                                    },
-                                    "breakfast": [
-                                                {
-                                                            "name": "[川崎]",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "name": "Eggs ’n Things ラゾーナ川崎店",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "lunch": [
-                                                {
-                                                            "name": "[江ノ島]",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "name": "きむら / 海鮮 江之島小屋",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "dinner": [
-                                                {
-                                                            "name": "TBD",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "activities": [
-                                                {
-                                                            "type": "成田空港温泉 空の湯?",
-                                                            "time": "Morning",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://soranoyu.com/access#shuttlebus"
-                                                },
-                                                {
-                                                            "type": "Luck Rack",
-                                                            "time": "Morning",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/e7EP2gBA2LqmMgYw6"
-                                                },
-                                                {
-                                                            "type": "Arrives in Tokyo",
-                                                            "time": "Afternoon",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "type": "NAPS",
-                                                            "time": "Afternoon",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/RT4GLL1rxgbgonuq6"
-                                                },
-                                                {
-                                                            "type": "[平塚]",
-                                                            "time": "Night",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                }
-                                    ]
-                        },
-                        {
-                                    "day": 2,
-                                    "date": "16/04/2026 (Thu)",
-                                    "location": "東京 > 秋名 > 東京",
-                                    "mapLink": "https://maps.google.com",
-                                    "accommodation": {
-                                                "name": "Hotel",
-                                                "location": "TBD"
-                                    },
-                                    "breakfast": [
-                                                {
-                                                            "name": "TBD",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "lunch": [
-                                                {
-                                                            "name": "[伊豆/伊東]",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "name": "こうげん寿し / 磯料理　開福丸",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "dinner": [
-                                                {
-                                                            "name": "箱根神社",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "name": "日本、〒250-0522 神奈川県足柄下郡箱根町元箱根８０−１",
-                                                            "mapLink": "https://maps.app.goo.gl/rtPJcfyCepSsQ43WA"
-                                                }
-                                    ],
-                                    "activities": [
-                                                {
-                                                            "type": "大室山登山リフト",
-                                                            "time": "Morning",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/hkiKXpkWhupRbFe69"
-                                                },
-                                                {
-                                                            "type": "伊豆シャボテン動物公園",
-                                                            "time": "Morning",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/XFCUWxy5jgEkyziB8"
-                                                },
-                                                {
-                                                            "type": "伊豆 > 箱根",
-                                                            "time": "Afternoon",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "type": "芦ノ湖Skyline (觀光山路)",
-                                                            "time": "Afternoon",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/ZxdCaDvQCasmLq6z5"
-                                                },
-                                                {
-                                                            "type": "買餸",
-                                                            "time": "Night",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "type": "BBQ/hotpot/cook",
-                                                            "time": "Night",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                }
-                                    ]
-                        },
-                        {
-                                    "day": 3,
-                                    "date": "17/04/2026 (Fri)",
-                                    "location": "東京 > 富士 / 御殿場",
-                                    "mapLink": "https://maps.google.com",
-                                    "accommodation": {
-                                                "name": "Hotel",
-                                                "location": "TBD"
-                                    },
-                                    "breakfast": [
-                                                {
-                                                            "name": "Cook",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "lunch": [
-                                                {
-                                                            "name": "[御殿場]",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "name": "つけ麺　白虎 / とんかつ 壱 / 肉汁うどん まえはら / 手打そば 金太郎 御殿場本店",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "dinner": [
-                                                {
-                                                            "name": "TBD",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "activities": [
-                                                {
-                                                            "type": "箱根 > 長尾峠(頭D長尾山路) > 富士",
-                                                            "time": "Morning",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "type": "Fuji Motor Sports Museum",
-                                                            "time": "Morning",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/QZvEnkephXxo6U5L8"
-                                                },
-                                                {
-                                                            "type": "AUTO PARADISE GOTEMBA",
-                                                            "time": "Afternoon",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/xAgheUw6S4dHTiTr7"
-                                                },
-                                                {
-                                                            "type": "棠陽神社",
-                                                            "time": "Afternoon",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/Yn7dMhEGPdjkpvmNA"
-                                                },
-                                                {
-                                                            "type": "御殿場 > 東京",
-                                                            "time": "Night",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "type": "[御殿場]",
-                                                            "time": "Night",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                }
-                                    ]
-                        },
-                        {
-                                    "day": 4,
-                                    "date": "18/04/2026 (Sat)",
-                                    "location": "富士 > 箱根 > 伊豆",
-                                    "mapLink": "https://maps.google.com",
-                                    "accommodation": {
-                                                "name": "Hotel",
-                                                "location": "TBD"
-                                    },
-                                    "breakfast": [
-                                                {
-                                                            "name": "TBD",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "lunch": [
-                                                {
-                                                            "name": "TBD",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "dinner": [
-                                                {
-                                                            "name": "Tomica Shop",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "name": "トミカショップ 東京キャラクターストリート店",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "activities": [
-                                                {
-                                                            "type": "埼玉 鉄道博物館",
-                                                            "time": "Morning",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/RHBy2iSJsnw7Kjij9"
-                                                },
-                                                {
-                                                            "type": "GENERAL STORE RAILYARD 大宮",
-                                                            "time": "Morning",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/SK3YmKpStnPVJTXk9"
-                                                },
-                                                {
-                                                            "type": "アルペントーキョー [Alpen TOKYO]",
-                                                            "time": "Afternoon",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/nKC3HYxZ25nWH3L17"
-                                                },
-                                                {
-                                                            "type": "模型車店",
-                                                            "time": "Afternoon",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/FEEsd6xmQgV34BDa9"
-                                                },
-                                                {
-                                                            "type": "最上階 夜景 居酒屋 空海 海浜幕張店",
-                                                            "time": "Night",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                }
-                                    ]
-                        },
-                        {
-                                    "day": 5,
-                                    "date": "19/04/2026 (Sun)",
-                                    "location": "伊豆 > 東京",
-                                    "mapLink": "https://maps.google.com",
-                                    "accommodation": {
-                                                "name": "Hotel",
-                                                "location": "TBD"
-                                    },
-                                    "breakfast": [
-                                                {
-                                                            "name": "TBD",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "lunch": [
-                                                {
-                                                            "name": "TBD",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "dinner": [
-                                                {
-                                                            "name": "群馬 > 東京",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "activities": [
-                                                {
-                                                            "type": "租JDM",
-                                                            "time": "Morning",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "type": "おもしろレンタカー 野田本店",
-                                                            "time": "Morning",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/23xgFqvXsHgLNwyNA"
-                                                },
-                                                {
-                                                            "type": "埼玉 > 群馬",
-                                                            "time": "Afternoon",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "type": "還JDM",
-                                                            "time": "Night",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                }
-                                    ]
-                        },
-                        {
-                                    "day": 6,
-                                    "date": "20/04/2026 (Mon)",
-                                    "location": "東京",
-                                    "mapLink": "https://maps.google.com",
-                                    "accommodation": {
-                                                "name": "Hotel",
-                                                "location": "TBD"
-                                    },
-                                    "breakfast": [
-                                                {
-                                                            "name": "豊洲市場",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "name": "日本、〒135-0061 東京都江東区豊洲６丁目６−１ 5:00-17:00",
-                                                            "mapLink": "https://maps.app.goo.gl/f1WbvehcHAn6ZtDf8"
-                                                }
-                                    ],
-                                    "lunch": [
-                                                {
-                                                            "name": "WE ARE THE FARM 豊洲 (ららぽーと豊洲3 1F)",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "dinner": [
-                                                {
-                                                            "name": "TBD",
-                                                            "mapLink": ""
-                                                }
-                                    ],
-                                    "activities": [
-                                                {
-                                                            "type": "Urban Dock LaLaport Toyosu",
-                                                            "time": "Morning",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/i4x1ez9rNUpfFZdt8"
-                                                },
-                                                {
-                                                            "type": "Back to Hong Kong",
-                                                            "time": "Afternoon",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": ""
-                                                },
-                                                {
-                                                            "type": "SMALL WORLDS Miniature Museum",
-                                                            "time": "Afternoon",
-                                                            "details": "",
-                                                            "remarks": "",
-                                                            "mapLink": "https://maps.app.goo.gl/SDAWXNJsPvEQMuAd6"
-                                                }
-                                    ]
-                        }
+                {
+                    "day": 1, "date": "15/04/2026 (Wed)", "location": "東京", "mapLink": "https://maps.google.com/maps?q=Tokyo",
+                    "accommodation": {name: "Hotel Tokyo", location: "Shinjuku"},
+                    "breakfast": [
+                        {name: "Eggs 'n Things ラゾーナ川崎店", mapLink: ""},
+                        {name: "Hotel Breakfast", mapLink: ""}
+                    ],
+                    "lunch": [
+                        {name: "きむら / 海鮮 江之島小屋", mapLink: ""},
+                        {name: "Local Restaurant", mapLink: ""}
+                    ],
+                    "dinner": [
+                        {name: "TBD", mapLink: ""},
+                        {name: "Izakaya", mapLink: ""}
+                    ],
+                    "activities": [
+                        {type: "成田空港温泉 空の湯", time: "Morning", details: "", remarks: "", mapLink: ""},
+                        {type: "Luck Rack", time: "Morning", details: "", remarks: "", mapLink: ""},
+                        {type: "Arrives in Tokyo", time: "Afternoon", details: "", remarks: "", mapLink: ""},
+                        {type: "NAPS", time: "Afternoon", details: "", remarks: "", mapLink: ""},
+                        {type: "[平塚] 魚ゆるり。平塚店", time: "Night", details: "", remarks: "", mapLink: ""}
+                    ]
+                },
+                {
+                    "day": 2, "date": "16/04/2026 (Thu)", "location": "東京 > 秋名 > 東京", "mapLink": "https://maps.google.com",
+                    "accommodation": {name: "Hotel", location: "TBD"},
+                    "breakfast": [{name: "TBD", mapLink: ""}],
+                    "lunch": [{name: "こうげん寿し / 磯料理 開福丸", mapLink: ""}],
+                    "dinner": [{name: "BBQ/hotpot", mapLink: ""}],
+                    "activities": [
+                        {type: "大室山登山リフト", time: "Morning", details: "", remarks: "", mapLink: ""},
+                        {type: "伊豆シャボテン動物公園", time: "Morning", details: "", remarks: "", mapLink: ""},
+                        {type: "伊豆 > 箱根", time: "Afternoon", details: "", remarks: "", mapLink: ""},
+                        {type: "芦ノ湖Skyline", time: "Afternoon", details: "", remarks: "", mapLink: ""}
+                    ]
+                },
+                {
+                    "day": 3, "date": "17/04/2026 (Fri)", "location": "東京 > 富士 / 御殿場", "mapLink": "https://maps.google.com",
+                    "accommodation": {name: "Hotel", location: "TBD"},
+                    "breakfast": [{name: "Cook", mapLink: ""}],
+                    "lunch": [{name: "つけ麺 白虎", mapLink: ""}],
+                    "dinner": [{name: "TBD", mapLink: ""}],
+                    "activities": [
+                        {type: "箱根 > 長尾峠 > 富士", time: "Morning", details: "", remarks: "", mapLink: ""},
+                        {type: "Fuji Motor Sports Museum", time: "Morning", details: "", remarks: "", mapLink: ""},
+                        {type: "AUTO PARADISE GOTEMBA", time: "Afternoon", details: "", remarks: "", mapLink: ""},
+                        {type: "棠陽神社", time: "Afternoon", details: "", remarks: "", mapLink: ""}
+                    ]
+                },
+                {
+                    "day": 4, "date": "18/04/2026 (Sat)", "location": "富士 > 箱根 > 伊豆", "mapLink": "https://maps.google.com",
+                    "accommodation": {name: "Hotel", location: "TBD"},
+                    "breakfast": [{name: "TBD", mapLink: ""}],
+                    "lunch": [{name: "TBD", mapLink: ""}],
+                    "dinner": [{name: "Tomica Shop", mapLink: ""}],
+                    "activities": [
+                        {type: "埼玉 鉄道博物館", time: "Morning", details: "", remarks: "", mapLink: ""},
+                        {type: "GENERAL STORE RAILYARD 大宮", time: "Morning", details: "", remarks: "", mapLink: ""},
+                        {type: "アルペントーキョー [Alpen TOKYO]", time: "Afternoon", details: "", remarks: "", mapLink: ""},
+                        {type: "模型車店 ミニカーショップ ケンボックス", time: "Afternoon", details: "", remarks: "", mapLink: ""}
+                    ]
+                },
+                {
+                    "day": 5, "date": "19/04/2026 (Sun)", "location": "伊豆 > 東京", "mapLink": "https://maps.google.com",
+                    "accommodation": {name: "Hotel", location: "TBD"},
+                    "breakfast": [{name: "租JDM", mapLink: ""}],
+                    "lunch": [{name: "TBD", mapLink: ""}],
+                    "dinner": [{name: "還JDM", mapLink: ""}],
+                    "activities": [
+                        {type: "租JDM", time: "Morning", details: "", remarks: "", mapLink: ""},
+                        {type: "おもしろレンタカー 野田本店", time: "Morning", details: "", remarks: "", mapLink: ""},
+                        {type: "埼玉 > 群馬", time: "Afternoon", details: "", remarks: "", mapLink: ""}
+                    ]
+                },
+                {
+                    "day": 6, "date": "20/04/2026 (Mon)", "location": "東京", "mapLink": "https://maps.google.com",
+                    "accommodation": {name: "Hotel", location: "TBD"},
+                    "breakfast": [{name: "豊洲市場", mapLink: ""}],
+                    "lunch": [{name: "WE ARE THE FARM 豊洲", mapLink: ""}],
+                    "dinner": [{name: "TBD", mapLink: ""}],
+                    "activities": [
+                        {type: "Urban Dock LaLaport Toyosu", time: "Morning", details: "", remarks: "", mapLink: ""},
+                        {type: "Back to Hong Kong", time: "Afternoon", details: "", remarks: "", mapLink: ""},
+                        {type: "SMALL WORLDS Miniature Museum", time: "Afternoon", details: "", remarks: "", mapLink: ""}
+                    ]
+                }
             ]
-};
+        };
 
         let recommendations = JSON.parse(localStorage.getItem('recommendations')) || [
             {name: "Tsukiji Outer Market", category: "Food", location: "Chuo, Tokyo", rating: 4.5, details: "Fresh seafood and sushi", mapLink: "https://maps.google.com/maps?q=Tsukiji+Market"},
             {name: "Senso-ji Temple", category: "Attraction", location: "Asakusa, Tokyo", rating: 4.6, details: "Tokyo's oldest temple", mapLink: "https://maps.google.com/maps?q=Senso-ji+Temple"},
-            {name: "Shibuya 109", category: "Shopping", location: "Shibuya, Tokyo", rating: 4.4, details: "Fashion center", mapLink: "https://maps.google.com/maps?q=Shibuya+109"},
-            {name: "Daikoku PA", category: "Car-related", location: "Yokohama", rating: 4.7, details: "Legendary JDM car meet", mapLink: "https://maps.google.com/maps?q=Daikoku+PA"},
-            {name: "Fuji Speedway", category: "Car-related", location: "Shizuoka", rating: 4.6, details: "Racing circuit", mapLink: "https://maps.google.com/maps?q=Fuji+Speedway"},
-            {name: "Tokyo Joypolis", category: "Entertainment", location: "Odaiba", rating: 4.3, details: "Indoor theme park", mapLink: "https://maps.google.com/maps?q=Tokyo+Joypolis"},
-            {name: "Akihabara Electric Town", category: "Shopping", location: "Akihabara", rating: 4.3, details: "Electronics & anime", mapLink: "https://maps.google.com/maps?q=Akihabara"},
-            {name: "Meiji Shrine", category: "Attraction", location: "Shibuya", rating: 4.7, details: "Serene Shinto shrine", mapLink: "https://maps.google.com/maps?q=Meiji+Shrine"},
-            {name: "Ichiran Ramen", category: "Food", location: "Shinjuku", rating: 4.3, details: "Authentic tonkotsu ramen", mapLink: "https://maps.google.com/maps?q=Ichiran+Ramen"},
-            {name: "Tokyo Skytree", category: "Attraction", location: "Sumida", rating: 4.5, details: "Tallest structure in Japan", mapLink: "https://maps.google.com/maps?q=Tokyo+Skytree"}
+            {name: "Daikoku PA", category: "Car-related", location: "Yokohama", rating: 4.7, details: "Legendary JDM car meet", mapLink: "https://maps.google.com/maps?q=Daikoku+PA"}
         ];
 
         let persons = JSON.parse(localStorage.getItem('persons')) || ["Person 1", "Person 2", "Person 3"];
@@ -1249,76 +1073,68 @@
             const grid = document.getElementById('itineraryGrid');
             grid.innerHTML = tripData.itinerary.map((day, idx) => `
                 <div class="day-card" onclick="toggleDayDetails(${idx})">
-                    <button class="edit-btn" onclick="openEditDayModal(${idx}); event.stopPropagation();">✏️ Edit</button>
-                    <h3>Day ${day.day}</h3>
-                    <div class="date">${day.date}</div>
-                    <div class="location">📍 ${day.location}</div>
-                    <div class="activity-count">${day.activities.length} activities + meals</div>
+                    <div class="day-card-header">
+                        <button class="edit-btn" onclick="openEditDayModal(${idx}); event.stopPropagation();">EDIT</button>
+                        <h3>DAY ${day.day}</h3>
+                        <div class="date">${day.date}</div>
+                        <div class="location">${day.location}</div>
+                    </div>
                     <div class="day-details" id="details-${idx}">
                         <div class="accommodation-section">
-                            <h4>🏨 Accommodation</h4>
+                            <h4>🏨 ACCOMMODATION</h4>
                             <div class="accommodation-info">
                                 <strong>${day.accommodation.name}</strong><br>
-                                📍 ${day.accommodation.location}
+                                ${day.accommodation.location}
                             </div>
                         </div>
 
                         <div class="meal-section">
-                            <h4>🍳 Breakfast Options</h4>
+                            <h4>BREAKFAST</h4>
                             ${day.breakfast.map((meal, mIdx) => `
                                 <div class="meal-option">
                                     <input type="radio" id="breakfast_${idx}_${mIdx}" name="breakfast_${idx}" value="${meal.name}" 
                                         ${selectedMeals[`breakfast_${idx}`] === meal.name ? 'checked' : ''}
                                         onchange="saveMealSelection('breakfast_${idx}', '${meal.name}')">
-                                    <label for="breakfast_${idx}_${mIdx}">
-                                        <strong>${meal.name}</strong>
-                                        ${meal.mapLink ? `<a href="${meal.mapLink}" target="_blank" style="margin-left: 10px; color: white;">📍</a>` : ''}
-                                    </label>
+                                    <label for="breakfast_${idx}_${mIdx}">${meal.name}</label>
                                 </div>
                             `).join('')}
                         </div>
 
                         <div class="meal-section">
-                            <h4>🍜 Lunch Options</h4>
+                            <h4>LUNCH</h4>
                             ${day.lunch.map((meal, mIdx) => `
                                 <div class="meal-option">
                                     <input type="radio" id="lunch_${idx}_${mIdx}" name="lunch_${idx}" value="${meal.name}"
                                         ${selectedMeals[`lunch_${idx}`] === meal.name ? 'checked' : ''}
                                         onchange="saveMealSelection('lunch_${idx}', '${meal.name}')">
-                                    <label for="lunch_${idx}_${mIdx}">
-                                        <strong>${meal.name}</strong>
-                                        ${meal.mapLink ? `<a href="${meal.mapLink}" target="_blank" style="margin-left: 10px; color: white;">📍</a>` : ''}
-                                    </label>
+                                    <label for="lunch_${idx}_${mIdx}">${meal.name}</label>
                                 </div>
                             `).join('')}
                         </div>
 
                         <div class="meal-section">
-                            <h4>🍽️ Dinner Options</h4>
+                            <h4>DINNER</h4>
                             ${day.dinner.map((meal, mIdx) => `
                                 <div class="meal-option">
                                     <input type="radio" id="dinner_${idx}_${mIdx}" name="dinner_${idx}" value="${meal.name}"
                                         ${selectedMeals[`dinner_${idx}`] === meal.name ? 'checked' : ''}
                                         onchange="saveMealSelection('dinner_${idx}', '${meal.name}')">
-                                    <label for="dinner_${idx}_${mIdx}">
-                                        <strong>${meal.name}</strong>
-                                        ${meal.mapLink ? `<a href="${meal.mapLink}" target="_blank" style="margin-left: 10px; color: white;">📍</a>` : ''}
-                                    </label>
+                                    <label for="dinner_${idx}_${mIdx}">${meal.name}</label>
                                 </div>
                             `).join('')}
                         </div>
 
-                        <div style="margin-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.3); padding-top: 20px;">
-                            <h4 style="margin-bottom: 12px;">🎯 Activities</h4>
+                        <div style="margin-top: 25px; padding-top: 25px; border-top: 1px solid #e0e0e0;">
+                            <h4 style="margin-bottom: 15px;">ACTIVITIES</h4>
                             ${day.activities.map((act, actIdx) => `
                                 <div class="activity">
                                     <div class="activity-header">
                                         <div class="activity-type">${act.type}</div>
                                         <div class="activity-time">${act.time}</div>
                                     </div>
-                                    <div class="activity-details">${act.details}</div>
-                                    ${act.remarks ? `<div class="activity-remarks">📝 ${act.remarks}</div>` : ''}
-                                    ${act.mapLink ? `<div class="activity-maps"><a href="${act.mapLink}" target="_blank">📍 View on Google Maps</a></div>` : ''}
+                                    ${act.details ? `<div class="activity-details">${act.details}</div>` : ''}
+                                    ${act.remarks ? `<div class="activity-remarks">${act.remarks}</div>` : ''}
+                                    ${act.mapLink ? `<div class="activity-maps"><a href="${act.mapLink}" target="_blank">VIEW ON MAP</a></div>` : ''}
                                 </div>
                             `).join('')}
                         </div>
@@ -1348,8 +1164,8 @@
                     <input type="text" id="editLocation" value="${day.location}">
                 </div>
 
-                <div style="margin-top: 20px; margin-bottom: 20px; padding: 15px; background: #fff3cd; border-radius: 8px;">
-                    <h4 style="margin-bottom: 15px; color: #333;">🏨 Accommodation</h4>
+                <div style="margin-top: 25px; margin-bottom: 25px; padding: 20px; background: #f9f9f9; border-left: 4px solid #000;">
+                    <h4 style="margin-bottom: 15px; color: #000; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">ACCOMMODATION</h4>
                     <div class="form-group">
                         <label>Hotel/Accommodation Name</label>
                         <input type="text" id="editAccomName" value="${day.accommodation.name}">
@@ -1360,46 +1176,46 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 20px; margin-bottom: 20px;">
-                    <h4 style="margin-bottom: 15px;">Breakfast Options</h4>
+                <div style="margin-top: 25px; margin-bottom: 25px;">
+                    <h4 style="margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">BREAKFAST OPTIONS</h4>
                     ${day.breakfast.map((meal, mIdx) => `
                         <div style="margin-bottom: 10px; display: flex; gap: 10px;">
                             <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].breakfast[${mIdx}].name = this.value">
                             <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].breakfast[${mIdx}].mapLink = this.value">
-                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].breakfast.splice(${mIdx}, 1); openEditDayModal(${idx});">Delete</button>
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].breakfast.splice(${mIdx}, 1); openEditDayModal(${idx});">DELETE</button>
                         </div>
                     `).join('')}
-                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].breakfast.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ Add Breakfast</button>
+                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].breakfast.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ ADD</button>
                 </div>
 
-                <div style="margin-top: 20px; margin-bottom: 20px;">
-                    <h4 style="margin-bottom: 15px;">Lunch Options</h4>
+                <div style="margin-top: 25px; margin-bottom: 25px;">
+                    <h4 style="margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">LUNCH OPTIONS</h4>
                     ${day.lunch.map((meal, mIdx) => `
                         <div style="margin-bottom: 10px; display: flex; gap: 10px;">
                             <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].lunch[${mIdx}].name = this.value">
                             <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].lunch[${mIdx}].mapLink = this.value">
-                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].lunch.splice(${mIdx}, 1); openEditDayModal(${idx});">Delete</button>
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].lunch.splice(${mIdx}, 1); openEditDayModal(${idx});">DELETE</button>
                         </div>
                     `).join('')}
-                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].lunch.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ Add Lunch</button>
+                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].lunch.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ ADD</button>
                 </div>
 
-                <div style="margin-top: 20px; margin-bottom: 20px;">
-                    <h4 style="margin-bottom: 15px;">Dinner Options</h4>
+                <div style="margin-top: 25px; margin-bottom: 25px;">
+                    <h4 style="margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">DINNER OPTIONS</h4>
                     ${day.dinner.map((meal, mIdx) => `
                         <div style="margin-bottom: 10px; display: flex; gap: 10px;">
                             <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].dinner[${mIdx}].name = this.value">
                             <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].dinner[${mIdx}].mapLink = this.value">
-                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].dinner.splice(${mIdx}, 1); openEditDayModal(${idx});">Delete</button>
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].dinner.splice(${mIdx}, 1); openEditDayModal(${idx});">DELETE</button>
                         </div>
                     `).join('')}
-                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].dinner.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ Add Dinner</button>
+                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].dinner.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ ADD</button>
                 </div>
 
-                <div style="margin-top: 20px; margin-bottom: 20px;">
-                    <h4 style="margin-bottom: 15px;">Activities</h4>
+                <div style="margin-top: 25px; margin-bottom: 25px;">
+                    <h4 style="margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">ACTIVITIES</h4>
                     ${day.activities.map((act, actIdx) => `
-                        <div style="margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <div style="margin-bottom: 15px; padding: 15px; background: #f9f9f9; border-left: 3px solid #ddd;">
                             <div class="form-group">
                                 <label>Activity Name</label>
                                 <input type="text" value="${act.type}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].type = this.value">
@@ -1421,14 +1237,14 @@
                                 <input type="text" value="${act.remarks || ''}" placeholder="Add notes about this activity" onchange="tripData.itinerary[${idx}].activities[${actIdx}].remarks = this.value">
                             </div>
                             <div class="form-group">
-                                <label>Google Maps Link (Optional)</label>
+                                <label>Google Maps Link</label>
                                 <input type="url" value="${act.mapLink || ''}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].mapLink = this.value">
                             </div>
-                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].activities.splice(${actIdx}, 1); openEditDayModal(${idx});">Delete Activity</button>
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].activities.splice(${actIdx}, 1); openEditDayModal(${idx});">DELETE</button>
                         </div>
                     `).join('')}
                 </div>
-                <button class="btn btn-secondary" onclick="addActivityToDay(${idx})">+ Add Activity</button>
+                <button class="btn btn-secondary" onclick="addActivityToDay(${idx})">+ ADD ACTIVITY</button>
             `;
             
             document.getElementById('editDayModal').classList.add('show');
@@ -1454,12 +1270,16 @@
             const grid = document.getElementById('recommendationsGrid');
             grid.innerHTML = recommendations.map((rec, idx) => `
                 <div class="rec-card">
-                    <h4>${rec.name}</h4>
-                    <span class="category">${rec.category}</span>
-                    <p>📍 ${rec.location}</p>
-                    <p>${rec.details}</p>
-                    <p class="rating">⭐ ${rec.rating}/5</p>
-                    ${rec.mapLink ? `<a href="${rec.mapLink}" target="_blank">📍 View on Google Maps</a>` : ''}
+                    <div class="rec-card-header">
+                        <h4>${rec.name}</h4>
+                        <span class="rec-card .category">${rec.category}</span>
+                    </div>
+                    <div class="rec-card-body">
+                        <p>📍 ${rec.location}</p>
+                        <p>${rec.details}</p>
+                        <p class="rating">⭐ ${rec.rating}/5</p>
+                        ${rec.mapLink ? `<a href="${rec.mapLink}" target="_blank">VIEW ON MAP</a>` : ''}
+                    </div>
                 </div>
             `).join('');
         }
@@ -1503,7 +1323,7 @@
             renderPersonsList();
             const list = document.getElementById('expensesList');
             if (expenses.length === 0) {
-                list.innerHTML = '<p style="color: #666; text-align: center; margin-top: 20px;">No expenses added yet.</p>';
+                list.innerHTML = '<p style="color: #999; text-align: center; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px;">No expenses added yet</p>';
             } else {
                 list.innerHTML = expenses.map((exp, idx) => `
                     <div class="expense-item">
@@ -1512,8 +1332,7 @@
                         <p><strong>Paid By:</strong> ${exp.paidBy}</p>
                         <p><strong>Category:</strong> ${exp.category}</p>
                         <p><strong>Split Type:</strong> ${exp.splitType === 'equal' ? 'Equal' : exp.splitType === 'parts' ? 'By Parts' : 'By Amount'}</p>
-                        ${exp.splitType !== 'equal' ? `<p><strong>Split Details:</strong> ${JSON.stringify(exp.splitDetails)}</p>` : ''}
-                        <button class="btn btn-secondary btn-small" onclick="deleteExpense(${idx})">Delete</button>
+                        <button class="btn btn-secondary btn-small" onclick="deleteExpense(${idx})">DELETE</button>
                     </div>
                 `).join('');
             }
@@ -1555,13 +1374,13 @@
             });
 
             let splitHTML = `
-                <div style="margin-top: 30px; background: #f8f9fa; padding: 20px; border-radius: 12px;">
-                    <h3 style="margin-bottom: 20px; color: #333;">💰 Expense Summary & Settlement</h3>
+                <div style="margin-top: 40px; background: #fff; padding: 40px; border: 1px solid #e0e0e0; border-left: 4px solid #000;">
+                    <h3 style="margin-bottom: 25px; color: #000; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">EXPENSE SETTLEMENT</h3>
                     <table class="split-table">
                         <thead>
                             <tr>
-                                <th>Person</th>
-                                <th>Status</th>
+                                <th>PERSON</th>
+                                <th>STATUS</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1571,11 +1390,11 @@
                 const balance = balances[person];
                 let status = '';
                 if (Math.abs(balance) < 0.01) {
-                    status = '✅ Settled';
+                    status = '✓ SETTLED';
                 } else if (balance > 0) {
-                    status = `🟢 Owed ¥${Math.abs(balance).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
+                    status = `OWED ¥${Math.abs(balance).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
                 } else {
-                    status = `🔴 Owes ¥${Math.abs(balance).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
+                    status = `OWES ¥${Math.abs(balance).toLocaleString('en-US', {maximumFractionDigits: 0})}`;
                 }
                 splitHTML += `
                     <tr>
@@ -1604,11 +1423,11 @@
             const container = document.getElementById('splitOptionsContainer');
             
             if (splitType === 'equal') {
-                container.innerHTML = '<p style="color: #666; font-size: 0.9em;">Expense will be split equally among all members.</p>';
+                container.innerHTML = '<p style="color: #666; font-size: 0.9em; text-transform: uppercase; letter-spacing: 0.5px;">Expense will be split equally among all members.</p>';
             } else if (splitType === 'parts') {
                 container.innerHTML = `
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 15px;">
-                        <p style="margin-bottom: 15px; font-weight: 600;">Enter percentage for each person:</p>
+                    <div style="background: #f9f9f9; padding: 15px; border-left: 3px solid #ddd; margin-top: 15px;">
+                        <p style="margin-bottom: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Enter percentage for each person:</p>
                         ${persons.map(p => `
                             <div class="form-group">
                                 <label>${p} (%)</label>
@@ -1619,8 +1438,8 @@
                 `;
             } else if (splitType === 'amount') {
                 container.innerHTML = `
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 15px;">
-                        <p style="margin-bottom: 15px; font-weight: 600;">Enter amount for each person:</p>
+                    <div style="background: #f9f9f9; padding: 15px; border-left: 3px solid #ddd; margin-top: 15px;">
+                        <p style="margin-bottom: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Enter amount for each person:</p>
                         ${persons.map(p => `
                             <div class="form-group">
                                 <label>${p} (¥)</label>
@@ -1713,7 +1532,7 @@
         function openEditRecommendationModal() {
             const form = document.getElementById('editRecommendationForm');
             form.innerHTML = recommendations.map((rec, idx) => `
-                <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <div style="margin-bottom: 25px; padding: 20px; background: #f9f9f9; border-left: 3px solid #ddd;">
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" value="${rec.name}" onchange="recommendations[${idx}].name = this.value">
@@ -1730,7 +1549,7 @@
                         <label>Google Maps Link</label>
                         <input type="url" value="${rec.mapLink || ''}" onchange="recommendations[${idx}].mapLink = this.value">
                     </div>
-                    <button class="btn btn-secondary btn-small" onclick="recommendations.splice(${idx}, 1); openEditRecommendationModal();">Delete</button>
+                    <button class="btn btn-secondary btn-small" onclick="recommendations.splice(${idx}, 1); openEditRecommendationModal();">DELETE</button>
                 </div>
             `).join('');
             document.getElementById('editRecommendationModal').classList.add('show');
