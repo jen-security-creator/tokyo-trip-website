@@ -1417,13 +1417,64 @@
                 `;
             });
 
-            splitHTML += `
-                        </tbody>
+            splitHTML += `</tbody>
                     </table>
+                </div>
+                <div style="margin-top: 40px; background: #fff; padding: 40px; border: 1px solid #e0e0e0; border-left: 4px solid #000;">
+                    <h3 style="margin-bottom: 25px; color: #000; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">PAYMENT DETAILS</h3>
+                    <div id="paymentDetails" style="background: #f9f9f9; padding: 15px; border-left: 3px solid #000;">
+                        <p style="color: #666; font-size: 14px;">Payment transactions will appear here</p>
+                    </div>
                 </div>
             `;
 
             summary.innerHTML = splitHTML;
+            calculatePaymentDetails(balances);
+        }
+
+        function calculatePaymentDetails(balances) {
+            // Generate payment transactions
+            const payments = [];
+            const balancesCopy = { ...balances };
+
+            for (const debtor in balancesCopy) {
+                if (balancesCopy[debtor] < -0.01) { // Person owes money
+                    let amountOwed = Math.abs(balancesCopy[debtor]);
+                    
+                    for (const creditor in balancesCopy) {
+                        if (creditor !== debtor && balancesCopy[creditor] > 0.01) {
+                            const paymentAmount = Math.min(amountOwed, balancesCopy[creditor]);
+                            if (paymentAmount > 0.01) {
+                                payments.push({
+                                    from: debtor,
+                                    to: creditor,
+                                    amount: paymentAmount
+                                });
+                                amountOwed -= paymentAmount;
+                                balancesCopy[creditor] -= paymentAmount;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Display payment details
+            const paymentDetailsDiv = document.getElementById('paymentDetails');
+            if (payments.length === 0) {
+                paymentDetailsDiv.innerHTML = '<p style="color: #666; font-size: 14px;">All settled! No payments needed.</p>';
+            } else {
+                let html = '<div style="display: flex; flex-direction: column; gap: 10px;">';
+                payments.forEach((payment) => {
+                    html += `<div style="display: flex; align-items: center; gap: 15px; padding: 12px; background: white; border-left: 3px solid #333;">
+                        <span style="font-weight: 600; flex: 1;">${payment.from}</span>
+                        <span style="color: #666; font-size: 0.9em;">pays</span>
+                        <span style="font-weight: 600; flex: 1;">${payment.to}</span>
+                        <span style="font-weight: 600; color: #000; white-space: nowrap;">HK$${payment.amount.toLocaleString('en-US', {maximumFractionDigits: 2})}</span>
+                    </div>`;
+                });
+                html += '</div>';
+                paymentDetailsDiv.innerHTML = html;
+            }
         }
 
         function openAddExpenseModal() {
