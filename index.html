@@ -1372,11 +1372,11 @@
                     splits = exp.splitDetails;
                 }
 
+                // Payer receives the full amount
                 balances[exp.paidBy] += exp.amount;
+                // Each person (including payer) owes their share
                 persons.forEach(p => {
-                    if (p !== exp.paidBy) {
-                        balances[p] -= splits[p];
-                    }
+                    balances[p] -= splits[p];
                 });
             });
 
