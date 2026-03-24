@@ -1335,7 +1335,7 @@
                 list.innerHTML = expenses.map((exp, idx) => `
                     <div class="expense-item">
                         <h4>${exp.description}</h4>
-                        <p><strong>Amount:</strong> ${exp.currency === 'JPY' ? '¥' + exp.amount.toLocaleString() : 'HK$' + (exp.amount).toLocaleString()} (${exp.currency})</p>
+                        <p><strong>Amount:</strong> HK$${(exp.currency === 'JPY' ? exp.amount * 0.05 : exp.amount).toLocaleString('en-US', {maximumFractionDigits: 2})} (${exp.currency === 'JPY' ? '¥' + exp.amount.toLocaleString() : 'HK$' + exp.amount.toLocaleString()})</p>
                         <p><strong>Paid By:</strong> ${exp.paidBy}</p>
                         <p><strong>Category:</strong> ${exp.category}</p>
                         <p><strong>Split Type:</strong> ${exp.splitType === 'equal' ? 'Equal' : exp.splitType === 'parts' ? 'By Parts' : 'By Amount'}</p>
@@ -1358,22 +1358,24 @@
             persons.forEach(p => balances[p] = 0);
 
             expenses.forEach(exp => {
+                // Convert to HKD for calculation
+                const amountInHKD = exp.currency === 'JPY' ? exp.amount * 0.05 : exp.amount;
                 let splits = {};
                 
                 if (exp.splitType === 'equal') {
-                    const perPerson = exp.amount / persons.length;
+                    const perPerson = amountInHKD / persons.length;
                     persons.forEach(p => splits[p] = perPerson);
                 } else if (exp.splitType === 'parts') {
                     const totalParts = Object.values(exp.splitDetails).reduce((a, b) => a + b, 0);
                     persons.forEach(p => {
-                        splits[p] = (exp.splitDetails[p] || 0) / totalParts * exp.amount;
+                        splits[p] = (exp.splitDetails[p] || 0) / totalParts * amountInHKD;
                     });
                 } else if (exp.splitType === 'amount') {
                     splits = exp.splitDetails;
                 }
 
-                // Payer receives the full amount
-                balances[exp.paidBy] += exp.amount;
+                // Payer receives the full amount (in HKD)
+                balances[exp.paidBy] += amountInHKD;
                 // Each person (including payer) owes their share
                 persons.forEach(p => {
                     balances[p] -= splits[p];
