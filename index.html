@@ -1258,6 +1258,7 @@
         function saveMealSelection(mealType, mealName) {
             selectedMeals[mealType] = mealName;
             localStorage.setItem('selectedMeals', JSON.stringify(selectedMeals));
+            syncToGitHub('itinerary'); // Sync meal selection to GitHub
         }
 
         function toggleDayDetails(idx) {
@@ -1273,18 +1274,18 @@
             form.innerHTML = `
                 <div class="form-group">
                     <label>Location</label>
-                    <input type="text" id="editLocation" value="${day.location}">
+                    <input type="text" id="editLocation" value="${day.location}" onchange="tripData.itinerary[${idx}].location = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
                 </div>
 
                 <div style="margin-top: 25px; margin-bottom: 25px; padding: 20px; background: #f9f9f9; border-left: 4px solid #000;">
                     <h4 style="margin-bottom: 15px; color: #000; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">ACCOMMODATION</h4>
                     <div class="form-group">
                         <label>Hotel/Accommodation Name</label>
-                        <input type="text" id="editAccomName" value="${day.accommodation.name}">
+                        <input type="text" id="editAccomName" value="${day.accommodation.name}" onchange="tripData.itinerary[${idx}].accommodation.name = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
                     </div>
                     <div class="form-group">
                         <label>Location</label>
-                        <input type="text" id="editAccomLocation" value="${day.accommodation.location}">
+                        <input type="text" id="editAccomLocation" value="${day.accommodation.location}" onchange="tripData.itinerary[${idx}].accommodation.location = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
                     </div>
                 </div>
 
@@ -1292,36 +1293,36 @@
                     <h4 style="margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">BREAKFAST OPTIONS</h4>
                     ${day.breakfast.map((meal, mIdx) => `
                         <div style="margin-bottom: 10px; display: flex; gap: 10px;">
-                            <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].breakfast[${mIdx}].name = this.value">
-                            <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].breakfast[${mIdx}].mapLink = this.value">
-                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].breakfast.splice(${mIdx}, 1); openEditDayModal(${idx});">DELETE</button>
+                            <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].breakfast[${mIdx}].name = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
+                            <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].breakfast[${mIdx}].mapLink = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].breakfast.splice(${mIdx}, 1); localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary'); openEditDayModal(${idx});">DELETE</button>
                         </div>
                     `).join('')}
-                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].breakfast.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ ADD</button>
+                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].breakfast.push({name: 'New Option', mapLink: ''}); localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary'); openEditDayModal(${idx});">+ ADD</button>
                 </div>
 
                 <div style="margin-top: 25px; margin-bottom: 25px;">
                     <h4 style="margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">LUNCH OPTIONS</h4>
                     ${day.lunch.map((meal, mIdx) => `
                         <div style="margin-bottom: 10px; display: flex; gap: 10px;">
-                            <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].lunch[${mIdx}].name = this.value">
-                            <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].lunch[${mIdx}].mapLink = this.value">
-                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].lunch.splice(${mIdx}, 1); openEditDayModal(${idx});">DELETE</button>
+                            <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].lunch[${mIdx}].name = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
+                            <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].lunch[${mIdx}].mapLink = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].lunch.splice(${mIdx}, 1); localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary'); openEditDayModal(${idx});">DELETE</button>
                         </div>
                     `).join('')}
-                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].lunch.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ ADD</button>
+                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].lunch.push({name: 'New Option', mapLink: ''}); localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary'); openEditDayModal(${idx});">+ ADD</button>
                 </div>
 
                 <div style="margin-top: 25px; margin-bottom: 25px;">
                     <h4 style="margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">DINNER OPTIONS</h4>
                     ${day.dinner.map((meal, mIdx) => `
                         <div style="margin-bottom: 10px; display: flex; gap: 10px;">
-                            <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].dinner[${mIdx}].name = this.value">
-                            <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].dinner[${mIdx}].mapLink = this.value">
-                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].dinner.splice(${mIdx}, 1); openEditDayModal(${idx});">DELETE</button>
+                            <input type="text" value="${meal.name}" style="flex: 1;" onchange="tripData.itinerary[${idx}].dinner[${mIdx}].name = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
+                            <input type="url" placeholder="Google Maps Link" value="${meal.mapLink || ''}" style="flex: 1;" onchange="tripData.itinerary[${idx}].dinner[${mIdx}].mapLink = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].dinner.splice(${mIdx}, 1); localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary'); openEditDayModal(${idx});">DELETE</button>
                         </div>
                     `).join('')}
-                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].dinner.push({name: 'New Option', mapLink: ''}); openEditDayModal(${idx});">+ ADD</button>
+                    <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].dinner.push({name: 'New Option', mapLink: ''}); localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary'); openEditDayModal(${idx});">+ ADD</button>
                 </div>
 
                 <div style="margin-top: 25px; margin-bottom: 25px;">
@@ -1330,11 +1331,11 @@
                         <div style="margin-bottom: 15px; padding: 15px; background: #f9f9f9; border-left: 3px solid #ddd;">
                             <div class="form-group">
                                 <label>Activity Name</label>
-                                <input type="text" value="${act.type}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].type = this.value">
+                                <input type="text" value="${act.type}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].type = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
                             </div>
                             <div class="form-group">
                                 <label>Time</label>
-                                <select onchange="tripData.itinerary[${idx}].activities[${actIdx}].time = this.value">
+                                <select onchange="tripData.itinerary[${idx}].activities[${actIdx}].time = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
                                     <option value="Morning" ${act.time === 'Morning' ? 'selected' : ''}>Morning</option>
                                     <option value="Afternoon" ${act.time === 'Afternoon' ? 'selected' : ''}>Afternoon</option>
                                     <option value="Night" ${act.time === 'Night' ? 'selected' : ''}>Night</option>
@@ -1342,17 +1343,17 @@
                             </div>
                             <div class="form-group">
                                 <label>Details</label>
-                                <input type="text" value="${act.details}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].details = this.value">
+                                <input type="text" value="${act.details}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].details = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
                             </div>
                             <div class="form-group">
                                 <label>Remarks</label>
-                                <input type="text" value="${act.remarks || ''}" placeholder="Add notes about this activity" onchange="tripData.itinerary[${idx}].activities[${actIdx}].remarks = this.value">
+                                <input type="text" value="${act.remarks || ''}" placeholder="Add notes about this activity" onchange="tripData.itinerary[${idx}].activities[${actIdx}].remarks = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
                             </div>
                             <div class="form-group">
                                 <label>Google Maps Link</label>
-                                <input type="url" value="${act.mapLink || ''}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].mapLink = this.value">
+                                <input type="url" value="${act.mapLink || ''}" onchange="tripData.itinerary[${idx}].activities[${actIdx}].mapLink = this.value; localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary');">
                             </div>
-                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].activities.splice(${actIdx}, 1); openEditDayModal(${idx});">DELETE</button>
+                            <button class="btn btn-secondary btn-small" onclick="tripData.itinerary[${idx}].activities.splice(${actIdx}, 1); localStorage.setItem('tripData', JSON.stringify(tripData)); syncToGitHub('itinerary'); openEditDayModal(${idx});">DELETE</button>
                         </div>
                     `).join('')}
                 </div>
@@ -1364,6 +1365,8 @@
 
         function addActivityToDay(idx) {
             tripData.itinerary[idx].activities.push({type: "New Activity", time: "Morning", details: "", remarks: "", mapLink: ""});
+            localStorage.setItem('tripData', JSON.stringify(tripData));
+            syncToGitHub('itinerary'); // Sync to GitHub
             openEditDayModal(idx);
         }
 
@@ -1374,6 +1377,7 @@
             tripData.itinerary[idx].accommodation.location = document.getElementById('editAccomLocation').value;
             
             localStorage.setItem('tripData', JSON.stringify(tripData));
+            syncToGitHub('itinerary'); // Sync to GitHub
             closeModal('editDayModal');
             renderItinerary();
         }
@@ -1690,6 +1694,7 @@
 
             recommendations.push({ name, category, location, details, mapLink, rating });
             localStorage.setItem('recommendations', JSON.stringify(recommendations));
+            syncToGitHub('recommendations'); // Sync to GitHub
 
             document.getElementById('recName').value = '';
             document.getElementById('recDetails').value = '';
@@ -1705,11 +1710,11 @@
                 <div style="margin-bottom: 25px; padding: 20px; background: #f9f9f9; border-left: 3px solid #ddd;">
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" value="${rec.name}" onchange="recommendations[${idx}].name = this.value">
+                        <input type="text" value="${rec.name}" onchange="recommendations[${idx}].name = this.value; localStorage.setItem('recommendations', JSON.stringify(recommendations)); syncToGitHub('recommendations');">
                     </div>
                     <div class="form-group">
                         <label>Location</label>
-                        <input type="text" value="${rec.location}" onchange="recommendations[${idx}].location = this.value">
+                        <input type="text" value="${rec.location}" onchange="recommendations[${idx}].location = this.value; localStorage.setItem('recommendations', JSON.stringify(recommendations)); syncToGitHub('recommendations');">
                     </div>
                     <div class="form-group">
                         <label>Details</label>
@@ -1717,9 +1722,9 @@
                     </div>
                     <div class="form-group">
                         <label>Google Maps Link</label>
-                        <input type="url" value="${rec.mapLink || ''}" onchange="recommendations[${idx}].mapLink = this.value">
+                        <input type="url" value="${rec.mapLink || ''}" onchange="recommendations[${idx}].mapLink = this.value; localStorage.setItem('recommendations', JSON.stringify(recommendations)); syncToGitHub('recommendations');">
                     </div>
-                    <button class="btn btn-secondary btn-small" onclick="recommendations.splice(${idx}, 1); openEditRecommendationModal();">DELETE</button>
+                    <button class="btn btn-secondary btn-small" onclick="deleteRecommendation(${idx});">DELETE</button>
                 </div>
             `).join('');
             document.getElementById('editRecommendationModal').classList.add('show');
@@ -1727,8 +1732,16 @@
 
         function saveRecommendations() {
             localStorage.setItem('recommendations', JSON.stringify(recommendations));
+            syncToGitHub('recommendations'); // Sync to GitHub
             closeModal('editRecommendationModal');
             renderRecommendations();
+        }
+        
+        function deleteRecommendation(idx) {
+            recommendations.splice(idx, 1);
+            localStorage.setItem('recommendations', JSON.stringify(recommendations));
+            syncToGitHub('recommendations'); // Sync to GitHub
+            openEditRecommendationModal();
         }
 
         function closeModal(modalId) {
