@@ -1,12 +1,25 @@
 {
   "version": 2,
+  "env": {
+    "GITHUB_TOKEN": "@github_token",
+    "GITHUB_OWNER": "@github_owner",
+    "GITHUB_REPO": "@github_repo"
+  },
   "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    },
     {
       "src": "index.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
     {
       "src": "/(.*)",
       "dest": "index.html"
